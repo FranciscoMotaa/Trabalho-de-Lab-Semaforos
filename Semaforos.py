@@ -1,20 +1,23 @@
+#importa a função pygame (Que vai ser necessário para criar a interface, imprimir o tabuleiro na tela e intereagir e assim)
 import pygame
 
 from pygame.locals import *
 from sys import exit
-
+#inicia o pygame
 pygame.init()
-
+#define o tamanho na janela 
 largura=640
 altura=480
-
+# Cria a janela do Pygame com as dimensões definidas acima
 tela=pygame.display.set_mode((largura, altura))
+# Define o título da janela
 pygame.display.set_caption('Jogo do Semáforo')
+# Inicia o loop principal do jogo
 while True:
-    for event in pygame.event.get():
         if event.type == QUIT:
-            pygame.quit()
+            pygame.quit() # Encerra o Pygame e sai do programa
             exit()
+    # Desenha as linhas verticais do tabuleiro
     #pygame.draw.rect(tela, (255, 0, 0), (200, 300, 40, 50))	Vou precisar
     #pygame.draw.circle(tela,(0, 0, 120), (360, 260), 40)	Vou precisar
     pygame.draw.line(tela,(255, 255, 255), (10,10), (10,310), 10)	#1ª linha vertical

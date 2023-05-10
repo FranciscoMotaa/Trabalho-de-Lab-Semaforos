@@ -29,29 +29,21 @@ def area1(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
 
-def teste(tela):
-    if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
-        pygame.draw.circle(tela,(0,0,0),(162.5,62.5),40)
-        pygame.display.update()
-        draw_triangle(tela,(255,255,0),(162.5,60))
-        pygame.display.update()
-
 def area2(tela):
     x, y = pygame.mouse.get_pos()
     if x>120 and y>20 and x<210 and y<110:
         if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
             pygame.draw.circle(tela,(0, 255, 0), (162.5, 62.5), 40)
             pygame.display.update()
-            teste(tela)
-        # if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
-        #     pygame.draw.circle(tela,(0,0,0),(162.5,62.5),40)
-        #     pygame.display.update()
-        #     draw_triangle(tela,(255,255,0),(162.5,60))
-        #     pygame.display.update()
-        # if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
-        #     draw_triangle(tela,(0,0,0),(162.5,60))
-        #     rect = pygame.Rect(137.5, 37.5, 50, 50)
-        #     pygame.draw.rect(tela, (255,0,0), rect)
+        if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+            pygame.draw.circle(tela,(0,0,0),(162.5,62.5),40)
+            pygame.display.update()
+            draw_triangle(tela,(255,255,0),(162.5,60))
+            pygame.display.update()
+        if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+            draw_triangle(tela,(0,0,0),(162.5,60))
+            rect = pygame.Rect(137.5, 37.5, 50, 50)
+            pygame.draw.rect(tela, (255,0,0), rect)
 
 def area3(tela):
     x, y = pygame.mouse.get_pos()

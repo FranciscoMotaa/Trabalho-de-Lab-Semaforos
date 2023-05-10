@@ -1,5 +1,4 @@
 import pygame
-
 from pygame.locals import *
 from sys import exit
 
@@ -23,12 +22,6 @@ def desenha_tabuleiro(tela):
     pygame.draw.line(tela,(255, 255, 255), (10,310), (410,310), 10)	#4ª linha horizontal
     pygame.display.update()
 
-def coloca_peca(tela):
-    x, y = pygame.mouse.get_pos()
-    rect = pygame.Rect(x, y, 50, 50)
-    pygame.draw.rect(tela, (255, 0, 0), rect)
-    pygame.display.update()
-
 def area1(tela):
     x, y = pygame.mouse.get_pos()
     if x>20 and y>20 and x<110 and y<110:
@@ -36,13 +29,29 @@ def area1(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
 
+def teste(tela):
+    if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+        pygame.draw.circle(tela,(0,0,0),(162.5,62.5),40)
+        pygame.display.update()
+        draw_triangle(tela,(255,255,0),(162.5,60))
+        pygame.display.update()
+
 def area2(tela):
     x, y = pygame.mouse.get_pos()
     if x>120 and y>20 and x<210 and y<110:
-        #rect = pygame.Rect(137.5, 37.5, 50, 50)
-        #pygame.draw.rect(tela, (255,0,0), rect)
-        pygame.draw.circle(tela,(0, 255, 0), (162.5, 62.5), 40)
-        pygame.display.update()
+        if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+            pygame.draw.circle(tela,(0, 255, 0), (162.5, 62.5), 40)
+            pygame.display.update()
+            teste(tela)
+        # if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+        #     pygame.draw.circle(tela,(0,0,0),(162.5,62.5),40)
+        #     pygame.display.update()
+        #     draw_triangle(tela,(255,255,0),(162.5,60))
+        #     pygame.display.update()
+        # if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+        #     draw_triangle(tela,(0,0,0),(162.5,60))
+        #     rect = pygame.Rect(137.5, 37.5, 50, 50)
+        #     pygame.draw.rect(tela, (255,0,0), rect)
 
 def area3(tela):
     x, y = pygame.mouse.get_pos()
@@ -125,16 +134,16 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             exit()
-        elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
-              area1(tela)
-              area2(tela)
-              area3(tela)
-              area4(tela)
-              area5(tela)
-              area6(tela)
-              area7(tela)
-              area8(tela)
-              area9(tela)
-              area10(tela)
-              area11(tela)
-              area12(tela)
+        else:
+            area1(tela)
+            area2(tela)
+            area3(tela)
+            area4(tela)
+            area5(tela)
+            area6(tela)
+            area7(tela)
+            area8(tela)
+            area9(tela)
+            area10(tela)
+            area11(tela)
+            area12(tela)

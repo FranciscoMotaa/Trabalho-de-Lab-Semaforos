@@ -1,0 +1,19 @@
+Em cada jogada, cada jogador realiza uma das seguintes acções:
+ Coloca uma peça verde num quadrado 
+vazio;
+ Substitui uma peça verde por uma peça amarela;
+ Substitui uma peça amarela por uma peça vermelha.
+De notar que as peças vermelhas não podem ser substituídas. Isto significa que o jogo
+tem de terminar sempre: à medida que o tabuleiro fica com peças vermelhas, é
+inevitável que surja uma linha de três peças.
+Nos diagramas seguintes usam-se as cores branca, cinzenta e preta para representar
+respectivamente o verde, o amarelo e o 
+vermelho
+O seguinte diagrama mostra uma posição com três possibilidades de vitória 
+imediata:
+1. substituir a peça verde em a3 (cria 
+um três em linha vertical de amarelos);
+2. substituir a peça amarela em d1 (cria 
+um três em linha diagonal de vermelhos);
+3. largar uma peça verde em c1 (cria um 
+três em linha diagonal de verdes).

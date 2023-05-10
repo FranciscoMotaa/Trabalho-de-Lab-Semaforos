@@ -1,11 +1,10 @@
+#importa a função pygame (Que vai ser necessário para criar a interface, imprimir o tabuleiro na tela e intereagir e assim)
 import pygame
 
 from pygame.locals import *
 from sys import exit
-
+#inicia o pygame
 pygame.init()
-
-def desenha_tabuleiro(tela):
     pygame.draw.line(tela,(255, 255, 255), (10,10), (10,310), 10)	#1ª linha vertical
     pygame.draw.line(tela,(255, 255, 255), (110,10), (110,310), 10)	#2ª linha vertical
     pygame.draw.line(tela,(255, 255, 255), (210,10), (210,310), 10)	#3ª linha vertical

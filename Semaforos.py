@@ -14,6 +14,7 @@ tela=pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Jogo do Semáforo')
 # Inicia o loop principal do jogo
 while True:
+    for event in pygame.event.get():    # Verifica se o usuário fechou a janela
         if event.type == QUIT:
             pygame.quit() # Encerra o Pygame e sai do programa
             exit()

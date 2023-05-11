@@ -7,8 +7,6 @@ pygame.init()
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
-pygame.init()
-
 largura=640
 altura=480
 fonte = pygame.font.Font(None, 50)
@@ -42,8 +40,8 @@ while True:
         if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
             mouse_pos = pygame.mouse.get_pos()
             if pygame.Rect(button1_pos, (button_width, button_height)).collidepoint(mouse_pos):
-                print("Botão 1 pressionado")
+                #Ação do botao1
             elif pygame.Rect(button2_pos, (button_width, button_height)).collidepoint(mouse_pos):
-                print("Botão 2 pressionado")
+                #Ação do botao2
             elif pygame.Rect(button3_pos, (button_width, button_height)).collidepoint(mouse_pos):
-                print("Botão 3 pressionado")
+                #Ação do botao3

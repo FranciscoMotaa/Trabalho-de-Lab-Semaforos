@@ -353,16 +353,17 @@ while True:
             tela.blit(button2_text, (button2_pos[0]+10, button2_pos[1]+10))
             tela.blit(button3_text, (button3_pos[0]+10, button3_pos[1]+10))
             pygame.display.update()
-        if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
-            mouse_pos = pygame.mouse.get_pos()
-            if pygame.Rect(button1_pos, (button_width, button_height)).collidepoint(mouse_pos):
-                jogo()
-                pygame.display.update()
-            elif pygame.Rect(button2_pos, (button_width, button_height)).collidepoint(mouse_pos):
-                print("Botão 2 pressionado")
-                pygame.display.update()
-            elif pygame.Rect(button3_pos, (button_width, button_height)).collidepoint(mouse_pos):
-                tela.fill(BLACK)
-                texto=fonte.render(f'Aviso: Não pode alterar esta peça', True, (255,255,255))
-                tela.blit(texto, (1, 1))
-                pygame.display.update()
+            if event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+                mouse_pos = pygame.mouse.get_pos()
+                if pygame.Rect(button1_pos, (button_width, button_height)).collidepoint(mouse_pos):
+                    tela.fill(BLACK)
+                    jogo(tela)
+                    pygame.display.update()
+                elif pygame.Rect(button2_pos, (button_width, button_height)).collidepoint(mouse_pos):
+                    print("Botão 2 pressionado")
+                    pygame.display.update()
+                elif pygame.Rect(button3_pos, (button_width, button_height)).collidepoint(mouse_pos):
+                    tela.fill(BLACK)
+                    texto=fonte.render(f'Aviso: Não pode alterar esta peça', True, (255,255,255))
+                    tela.blit(texto, (1, 1))
+                    pygame.display.update()

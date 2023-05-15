@@ -31,11 +31,17 @@ while True:
     # Limpar a tela
     tela.fill(BRANCO)
 
+    posicao_mouse = pygame.mouse.get_pos()
+    x_mouse = posicao_mouse[0]
+    y_mouse = posicao_mouse[1]
+
+
     # Desenhar as opções do menu 
     for i in range(len(opcoes)):
         texto = FONTE.render(opcoes[i], True, CINZA_ESCURO)
         posicao = (largura/2 - texto.get_width()/2, altura/2 - len(opcoes)*30 + i*60)
         tela.blit(texto, posicao)
+
 
     # Atualizar a tela
     pygame.display.update()

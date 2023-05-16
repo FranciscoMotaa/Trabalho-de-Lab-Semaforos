@@ -13,7 +13,7 @@ tela=pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Jogo do Semáforo')
 while True:
     area_sair_escolha_jogadores = pygame.Rect(13,665,100,100)
-    fundo=pygame.image.load("escolher jogadores.png")
+    fundo=pygame.image.load("nome.png")
     tela.blit(fundo, (0,0))
     pygame.display.update()
     for event in pygame.event.get():

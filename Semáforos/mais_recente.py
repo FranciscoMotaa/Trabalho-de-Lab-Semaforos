@@ -4,6 +4,53 @@ from sys import exit
 
 pygame.init()
 
+def desenha_tabuleiro(tela):
+    while True:
+        area_sair_jogo = pygame.Rect(13,665,100,100)
+        fundo = pygame.image.load("jogo simples.png")
+        tela.blit(fundo, (0,0))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_jogo.collidepoint(mouse_pos):
+                    main()
+
+def escolhaNome(tela):
+    active=False
+    while True:
+        input_rect= pygame.Rect(470,470,435,100)
+        area_sair_escolhaNomes = pygame.Rect(13,665,100,100)
+        fundo = pygame.image.load("nome.png")
+        tela.blit(fundo, (0,0))
+        fonte = pygame.font.Font(None, 50)
+        user1_text = ''
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_escolhaNomes.collidepoint(mouse_pos):
+                    menu_tipoDeJogo(tela)
+                elif input_rect.collidepoint(event.pos):
+                    active=True
+                else:
+                    active=False            
+            elif event.type == pygame.KEYDOWN:
+                    if active:
+                        if event.key == pygame.K_RETURN:
+                            print(user1_text)
+                            user1_text=''
+                        elif event.key == pygame.K_BACKSPACE:
+                            user1_text = user1_text[:-1]
+                        else:
+                            user1_text += event.unicode
+        pygame.display.update()
+
 def area1(tela):
     if matriz[0][0]==0:
         pygame.draw.circle(tela,(0, 255, 0), (60, 63), 40)
@@ -247,8 +294,8 @@ def jogo(tela):
 def menu_regras(tela):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
-        imagem_opcao3 = pygame.image.load("REGRAS.png")
-        tela.blit(imagem_opcao3, (0,0))
+        fundo = pygame.image.load("REGRAS.png")
+        tela.blit(fundo, (0,0))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -276,9 +323,9 @@ def menu_tipoDeJogo(tela):
                 if area_sair_escolha_jogadores.collidepoint(mouse_pos):
                     main()
                 elif area_singleplayer.collidepoint(mouse_pos):
-                    jogo(tela)
+                    escolhaNome(tela)
                 elif area_multiplayer.collidepoint(mouse_pos):
-                    jogo(tela)
+                    escolhaNomes(tela)
 
 def desenha_menu(tela):
     fundo = pygame.image.load("semaforo menu com peças.png")
@@ -300,7 +347,6 @@ def main():
     [0,0,0,0],
     [0,0,0,0]
     ]
-
 
     while True:
         desenha_menu(tela)

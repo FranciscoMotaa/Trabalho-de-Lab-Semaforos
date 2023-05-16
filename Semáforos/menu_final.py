@@ -1,4 +1,5 @@
 import pygame
+import pygame.mixer
 from pygame.locals import *
 from sys import exit
 
@@ -34,6 +35,10 @@ def main():
     largura=1366
     altura=768
     janela=pygame.display.set_mode((largura,altura))
+
+    pygame.mixer.music.load("Magical Sound Shower.mp3")
+    pygame.mixer.music.play(-1) #-1 para a música tar a dar sempre 
+
     while True:
         for event in pygame.event.get():
             if event.type==pygame.QUIT:

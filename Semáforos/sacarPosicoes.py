@@ -16,8 +16,8 @@ def desenha_tabuleiro(tela):
     pygame.draw.line(tela,(255, 255, 255), (10,310), (410,310), 10)	#4ª linha horizontal
     pygame.display.update()
 
-largura=640
-altura=480
+largura=1366
+altura=768
 fonte = pygame.font.Font(None, 30)
 tela=pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('Jogo do Semáforo')

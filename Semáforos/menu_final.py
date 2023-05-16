@@ -12,7 +12,7 @@ def desenha_menu(janela):
 def menu_regras(janela):
     while True:
         area_sair_regras = pygame.Rect(30, 663, 100, 100)
-        imagem_opcao3 = pygame.image.load("REGRAS1.png")
+        imagem_opcao3 = pygame.image.load("REGRAS.png")
         janela.blit(imagem_opcao3, (0,0))
         pygame.display.update()
         for event in pygame.event.get():

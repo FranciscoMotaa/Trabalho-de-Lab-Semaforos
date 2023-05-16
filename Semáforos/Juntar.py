@@ -283,40 +283,28 @@ def jogo(tela):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = pygame.mouse.get_pos()
                 if x>16 and x<106 and y>16 and y<106:
-                    erro=False
                     area1(tela)
                 if x>116 and x<206 and y>16 and y<106:
-                    erro=False
                     area2(tela)
                 if x>216 and x<306 and y>16 and y<106:
-                    erro=False
                     area3(tela)
                 if x>316 and x<406 and y>16 and y<106:
-                    erro=False
                     area4(tela)
                 if x>16 and x<106 and y>116 and y<206:
-                    erro=False
                     area5(tela)
                 if x>116 and x<206 and y>116 and y<206:
-                    erro=False
                     area6(tela)
                 if x>216 and x<306 and y>116 and y<206:
-                    erro=False
                     area7(tela)
                 if x>316 and x<406 and y>116 and y<206:
-                    erro=False
                     area8(tela)
                 if x>16 and x<106 and y>216 and y<306:
-                    erro=False
                     area9(tela)
                 if x>116 and x<206 and y>216 and y<306:
-                    erro=False
                     area10(tela)
                 if x>216 and x<306 and y>216 and y<306:
-                    erro=False
                     area11(tela)
                 if x>316 and x<406 and y>216 and y<306:
-                    erro=False
                     area12(tela)
 
 def desenha_menu(tela):

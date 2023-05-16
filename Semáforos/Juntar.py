@@ -376,7 +376,6 @@ while True:
                     tela.fill(BLACK)
                     pygame.display.update()
                     menu_tipoDeJogo(tela)
-                    jogo(tela)
                 elif button2_rect.collidepoint(mouse_pos):
                     print("butao 2 pressionado")
                 elif button3_rect.collidepoint(mouse_pos):

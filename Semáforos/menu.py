@@ -13,7 +13,7 @@ pygame.font.init()
 FONTE = pygame.font.SysFont("Arial", 40)
 
 #opções do menu
-opcoes = ["Novo Jogo", "Continuar Jogo", "Regras!"]
+opcoes = ["Novo Jogo", "Continuar Jogo", "Regras"]
 
 # Janela do jogo
 largura = 640

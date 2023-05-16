@@ -1,5 +1,4 @@
-Em cada jogada, cada jogador realiza uma das seguintes acções:
- Coloca uma peça verde num quadrado 
+Em cada jogada, cada jogador realiza uma das seguintes acções: Coloca uma peça verde num quadrado 
 vazio;
  Substitui uma peça verde por uma peça amarela;
  Substitui uma peça amarela por uma peça vermelha.

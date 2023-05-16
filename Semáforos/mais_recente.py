@@ -3,27 +3,7 @@ from pygame.locals import *
 from sys import exit
 
 pygame.init()
-#Desenhar o tabuleiro
-def desenha_tabuleiro(tela):
-    pygame.draw.line(tela,(255, 255, 255), (10,10), (10,310), 10)	#1ª linha vertical
-    pygame.draw.line(tela,(255, 255, 255), (110,10), (110,310), 10)	#2ª linha vertical
-    pygame.draw.line(tela,(255, 255, 255), (210,10), (210,310), 10)	#3ª linha vertical
-    pygame.draw.line(tela,(255, 255, 255), (310,10), (310,310), 10)	#4ª linha vertical
-    pygame.draw.line(tela,(255, 255, 255), (410,10), (410,310), 10)	#5ª linha vertical
-    pygame.draw.line(tela,(255, 255, 255), (10,10), (410,10), 10)	#1ª linha horizontal
-    pygame.draw.line(tela,(255, 255, 255), (10,110), (410,110), 10)	#2ª linha horizontal
-    pygame.draw.line(tela,(255, 255, 255), (10,210), (410,210), 10)	#3ª linha horizontal
-    pygame.draw.line(tela,(255, 255, 255), (10,310), (410,310), 10)	#4ª linha horizontal
-    pygame.display.update()
 
-#Desenhar o triangulo
-def draw_triangle(screen, color, point):
-    point1 = (point[0], point[1]-40)
-    point2 = (point[0]+40, point[1]+40)
-    point3 = (point[0]-40, point[1]+40)
-    pygame.draw.polygon(screen, color, [point1, point2, point3])
-
-#Trocar os desenhos da area1/celula [0][0] da matriz
 def area1(tela):
     if matriz[0][0]==0:
         pygame.draw.circle(tela,(0, 255, 0), (60, 63), 40)
@@ -41,8 +21,6 @@ def area1(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[0][0]=3
-
-#Trocar os desenhos da area2/celula [0][1] da matriz
 def area2(tela):
     if matriz[0][1]==0:
         pygame.draw.circle(tela,(0, 255, 0), (160, 63), 40)
@@ -60,8 +38,6 @@ def area2(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[0][1]=3
-
-#Trocar os desenhos da area3/celula [0][2] da matriz
 def area3(tela):
     if matriz[0][2]==0:
         pygame.draw.circle(tela,(0, 255, 0), (260, 63), 40)
@@ -79,8 +55,6 @@ def area3(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[0][2]=3
-
-#Trocar os desenhos da area4/celula [0][3] da matriz
 def area4(tela):
     if matriz[0][3]==0:
         pygame.draw.circle(tela,(0, 255, 0), (360, 63), 40)
@@ -98,8 +72,6 @@ def area4(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[0][3]=3
-
-#Trocar os desenhos da area5/celula [1][0] da matriz
 def area5(tela):
     if matriz[1][0]==0:
         pygame.draw.circle(tela,(0, 255, 0), (60, 163), 40)
@@ -117,8 +89,6 @@ def area5(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[1][0]=3
-
-#Trocar os desenhos da area7/celula [1][1] da matriz
 def area6(tela):
     if matriz[1][1]==0:
         pygame.draw.circle(tela,(0, 255, 0), (160, 163), 40)
@@ -136,8 +106,6 @@ def area6(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[1][1]=3
-
-#Trocar os desenhos da area7/celula [1][2] da matriz
 def area7(tela):
     if matriz[1][2]==0:
         pygame.draw.circle(tela,(0, 255, 0), (260, 163), 40)
@@ -155,8 +123,6 @@ def area7(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[1][2]=3
-
-#Trocar os desenhos da area8/celula [1][3] da matriz
 def area8(tela):
     if matriz[1][3]==0:
         pygame.draw.circle(tela,(0, 255, 0), (360, 163), 40)
@@ -174,8 +140,6 @@ def area8(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[1][3]=3
-
-#Trocar os desenhos da area9/celula [2][0] da matriz
 def area9(tela):
     if matriz[2][0]==0:
         pygame.draw.circle(tela,(0, 255, 0), (60, 263), 40)
@@ -193,8 +157,6 @@ def area9(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[2][0]=3
-
-#Trocar os desenhos da area10/celula [2][1] da matriz
 def area10(tela):
     if matriz[2][1]==0:
         pygame.draw.circle(tela,(0, 255, 0), (160, 263), 40)
@@ -212,8 +174,6 @@ def area10(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[2][1]=3
-
-#Trocar os desenhos da area11/celula [2][2] da matriz
 def area11(tela):
     if matriz[2][2]==0:
         pygame.draw.circle(tela,(0, 255, 0), (260, 263), 40)
@@ -231,8 +191,6 @@ def area11(tela):
         pygame.draw.rect(tela, (255,0,0), rect)
         pygame.display.update()
         matriz[2][2]=3
-
-#Trocar os desenhos da area12/celula [2][3] da matriz
 def area12(tela):
     if matriz[2][3]==0:
         pygame.draw.circle(tela,(0, 255, 0), (360, 263), 40)
@@ -251,27 +209,6 @@ def area12(tela):
         pygame.display.update()
         matriz[2][3]=3
 
-def menu_tipoDeJogo(tela):
-    while True:
-        tela.fill(BLACK)
-        pygame.draw.rect(tela, BLACK, (button1_pos[0], button1_pos[1], button_width, button_height))
-        pygame.draw.rect(tela, BLACK, (button2_pos[0], button2_pos[1], button_width, button_height))
-        tela.blit(button4_text, (button4_pos[0]+10, button4_pos[1]+10))
-        tela.blit(button5_text, (button5_pos[0]+10, button5_pos[1]+10))
-        pygame.display.update()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-            else:
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    mouse_pos = pygame.mouse.get_pos()
-                    if button4_rect.collidepoint(mouse_pos):
-                        tela.fill(BLACK)
-                        pygame.display.update()
-                        jogo(tela)
-                    elif button5_rect.collidepoint(mouse_pos):
-                        print("butao 5 pressionado")
 
 def jogo(tela):
     while True:
@@ -307,64 +244,80 @@ def jogo(tela):
                 if x>316 and x<406 and y>216 and y<306:
                     area12(tela)
 
+def menu_regras(tela):
+    while True:
+        area_sair_regras = pygame.Rect(13, 665, 100, 100)
+        imagem_opcao3 = pygame.image.load("REGRAS.png")
+        tela.blit(imagem_opcao3, (0,0))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_regras.collidepoint(mouse_pos):
+                    main()
+
+def menu_tipoDeJogo(tela):
+    while True:
+        area_sair_escolha_jogadores = pygame.Rect(13,665,100,100)
+        area_singleplayer = pygame.Rect(320,434,355,100)
+        area_multiplayer = pygame.Rect(720,434,355,100)
+        fundo=pygame.image.load("escolher jogadores.png")
+        tela.blit(fundo, (0,0))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type==QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_escolha_jogadores.collidepoint(mouse_pos):
+                    main()
+                elif area_singleplayer.collidepoint(mouse_pos):
+                    jogo(tela)
+                elif area_multiplayer.collidepoint(mouse_pos):
+                    jogo(tela)
+
 def desenha_menu(tela):
-    tela.fill(BLACK)
-    pygame.draw.rect(tela, BLACK, (button1_pos[0], button1_pos[1], button_width, button_height))
-    pygame.draw.rect(tela, BLACK, (button2_pos[0], button2_pos[1], button_width, button_height))
-    pygame.draw.rect(tela, BLACK, (button3_pos[0], button3_pos[1], button_width, button_height))
-    tela.blit(button1_text, (button1_pos[0]+10, button1_pos[1]+10))
-    tela.blit(button2_text, (button2_pos[0]+10, button2_pos[1]+10))
-    tela.blit(button3_text, (button3_pos[0]+10, button3_pos[1]+10))
+    fundo = pygame.image.load("semaforo menu com peças.png")
+    tela.blit(fundo, (0,0))
     pygame.display.update()
 
-matriz=[
+def main():
+    largura=1366
+    altura=768
+    tela=pygame.display.set_mode((largura,altura))
+
+    area_novo_jogo = pygame.Rect(177, 265, 300, 100)
+    area_continuar_jogo = pygame.Rect(177, 361, 300, 100)
+    area_regras = pygame.Rect(177, 496, 300, 100)
+    area_sair = pygame.Rect(177, 600, 300, 100)
+
+    matriz=[
     [0,0,0,0],
     [0,0,0,0],
     [0,0,0,0]
-]
+    ]
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-largura=1366
-altura=768
-fonte = pygame.font.Font(None, 50)
-tela=pygame.display.set_mode((largura, altura))
-pygame.display.set_caption('Jogo do Semáforo')
-# Define as posições e dimensões dos botões
-button_width = 200
-button_height = 50
-button1_pos = (largura//2 - button_width//2, 100)
-button2_pos = (largura//2 - button_width//2, 200)
-button3_pos = (largura//2 - button_width//2, 300)
-button4_pos = (largura//2 - button_width//2, 100)
-button5_pos = (largura//2 - button_width//2, 200)
 
-# Cria os textos dos botões
-button1_text = fonte.render("Novo Jogo", True, WHITE)
-button2_text = fonte.render("Continuar Jogo", True, WHITE)
-button3_text = fonte.render("Regras", True, WHITE)
-button1_rect = pygame.Rect(button1_pos, (button_width, button_height))
-button2_rect = pygame.Rect(button2_pos, (button_width, button_height))
-button3_rect = pygame.Rect(button3_pos, (button_width, button_height))
-button4_text = fonte.render("Player vs Player", True, WHITE)
-button5_text = fonte.render("Player vs BOT", True, WHITE)
-button4_rect = pygame.Rect(button4_pos, (button_width, button_height))
-button5_rect = pygame.Rect(button5_pos, (button_width, button_height))
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            exit()
-        else:
-            desenha_menu(tela)
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                mouse_pos = pygame.mouse.get_pos()
-                if button1_rect.collidepoint(mouse_pos):
-                    tela.fill(BLACK)
-                    pygame.display.update()
+    while True:
+        desenha_menu(tela)
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_novo_jogo.collidepoint(mouse_pos):
                     menu_tipoDeJogo(tela)
-                elif button2_rect.collidepoint(mouse_pos):
-                    print("butao 2 pressionado")
-                elif button3_rect.collidepoint(mouse_pos):
-                    print("Mostra regras")
+                elif area_continuar_jogo.collidepoint(mouse_pos):
+                    print("Continuar jogo")
+                elif area_regras.collidepoint(mouse_pos):
+                    menu_regras(tela)
+                elif area_sair.collidepoint(mouse_pos):
+                    pygame.quit()
+                    exit()
+
+main()

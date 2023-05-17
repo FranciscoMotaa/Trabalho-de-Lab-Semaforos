@@ -363,8 +363,40 @@ def menu_tipoDeJogo(tela):
 
 def desenha_menu(tela):
     fundo = pygame.image.load("semaforo menu com peças.png")
+    #imagem_musica = pygame.image.load("com som.png")
     tela.blit(fundo, (0,0))
+    #musica(tela)
+    #tela.blit(imagem_musica, (1235, 655))
     pygame.display.update()
+
+def musica(tela):
+    botao_musica = pygame.Rect(1235, 655, 100, 100)
+    imagem_musica = pygame.image.load("com som.png")
+    imagem_mute = pygame.image.load("sem som.png")
+    tela.blit(imagem_musica, (1235, 655))
+    pygame.display.update()
+    #pygame.mixer.music.load("Magical Sound Shower.mp3")
+    #pygame.mixer.music.play(-1)
+    while True:
+        for event in pygame.event.get():
+            if event.type==QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if botao_musica.collidepoint(mouse_pos):
+                    pygame.mixer.music.pause()
+                    tela.blit(imagem_mute, (1235, 655))
+                    pygame.display.update()
+                elif botao_musica.collidepoint(mouse_pos):
+                    pygame.mixer.music.unpause()
+                    tela.blit(imagem_musica, (1235, 655))
+                    pygame.display.update()
+        pygame.display.update() 
+                   
+
+
+
 
 def main():
     largura=1366
@@ -387,6 +419,7 @@ def main():
 
     while True:
         desenha_menu(tela)
+        #musica(tela)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 pygame.quit()

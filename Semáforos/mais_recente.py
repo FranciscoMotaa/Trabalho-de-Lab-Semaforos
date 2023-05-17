@@ -1,4 +1,5 @@
 import pygame
+import pygame.mixer
 from pygame.locals import *
 from sys import exit
 
@@ -20,9 +21,13 @@ def desenha_tabuleiro(tela):
                     main()
 
 def escolhaNome(tela):
-    active=False
+    fonte = pygame.font.Font(None, 50)
+    input_rect = pygame.Rect(470, 470, 435, 100)
+    area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
+    user1_text = ''
+    fundo=pygame.image.load("nome.png")
     while True:
-        input_rect= pygame.Rect(470,470,435,100)
+        """ input_rect= pygame.Rect(470,470,435,100)
         area_sair_escolhaNomes = pygame.Rect(13,665,100,100)
         fundo = pygame.image.load("nome.png")
         tela.blit(fundo, (0,0))
@@ -49,7 +54,36 @@ def escolhaNome(tela):
                             user1_text = user1_text[:-1]
                         else:
                             user1_text += event.unicode
+        pygame.display.flip() """
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    print(user1_text)
+                    user1_text = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    user1_text = user1_text[:-1]
+                else:
+                    user1_text += event.unicode
+            elif event.type == pygame.K_RETURN:
+                jogo(tela)
+                
+        tela.blit(fundo, (0,0))
+        #pygame.draw.rect(fundo, (255, 255, 255), input_rect, 1) #Botão para ver  o tamanho da caixa de texto
+        text_surface = fonte.render(user1_text, True, (0, 0, 0)) #Cria a superfície de texto
+        tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
+        input_rect.w = max(435, text_surface.get_width() + 10) #atualiza a largura do retangulo consoante o tamanho de texto 
+
+        #pygame.draw.rect(tela, (255, 255, 255), area_sair_escolhaNomes);;; Vai aparecer tp um retangulo branco na cena da seta, basicamente é só para ver se o retangulo tá bem posicionado
         pygame.display.update()
+
+        if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0]:
+                menu_tipoDeJogo(tela)
+
+        pygame.display.flip()
 
 def area1(tela):
     if matriz[0][0]==0:
@@ -347,6 +381,9 @@ def main():
     [0,0,0,0],
     [0,0,0,0]
     ]
+
+    pygame.mixer.music.load("Magical Sound Shower.mp3")
+    pygame.mixer.music.play(-1) 
 
     while True:
         desenha_menu(tela)

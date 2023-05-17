@@ -35,6 +35,9 @@ def main():
     largura=1366
     altura=768
     janela=pygame.display.set_mode((largura,altura))
+    janela.fill(0xA1CCCC)
+    pygame.display.update()
+
 
     pygame.mixer.music.load("Magical Sound Shower.mp3")
     pygame.mixer.music.play(-1) #-1 para a música tar a dar sempre 

@@ -67,13 +67,16 @@ def escolhaNome(tela):
                     user1_text = user1_text[:-1]
                 else:
                     user1_text += event.unicode
+            elif event.type == pygame.K_RETURN:
+                jogo(tela)
+                
         tela.blit(fundo, (0,0))
-        pygame.draw.rect(tela, (255, 255, 255), input_rect, 2)
-        text_surface = fonte.render(user1_text, True, (0, 0, 0))
-        tela.blit(text_surface, (input_rect.x + 5, input_rect.y + 5))
-        input_rect.w = max(435, text_surface.get_width() + 10)
+        #pygame.draw.rect(fundo, (255, 255, 255), input_rect, 1) #Botão para ver  o tamanho da caixa de texto
+        text_surface = fonte.render(user1_text, True, (0, 0, 0)) #Cria a superfície de texto
+        tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
+        input_rect.w = max(435, text_surface.get_width() + 10) #atualiza a largura do retangulo consoante o tamanho de texto 
 
-        pygame.draw.rect(tela, (255, 0, 0), area_sair_escolhaNomes)
+        #pygame.draw.rect(tela, (255, 255, 255), area_sair_escolhaNomes);;; Vai aparecer tp um retangulo branco na cena da seta, basicamente é só para ver se o retangulo tá bem posicionado
         pygame.display.update()
 
         if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):

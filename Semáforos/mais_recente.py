@@ -20,41 +20,13 @@ def desenha_tabuleiro(tela):
                 if area_sair_jogo.collidepoint(mouse_pos):
                     main()
 
-def escolhaNome(tela):
+def escolhaNomes(tela):
     fonte = pygame.font.Font(None, 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
     user1_text = ''
-    fundo=pygame.image.load("nome.png")
+    fundo=pygame.image.load("nomes.png")
     while True:
-        """ input_rect= pygame.Rect(470,470,435,100)
-        area_sair_escolhaNomes = pygame.Rect(13,665,100,100)
-        fundo = pygame.image.load("nome.png")
-        tela.blit(fundo, (0,0))
-        fonte = pygame.font.Font(None, 50)
-        user1_text = ''
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                exit()
-            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
-                mouse_pos=pygame.mouse.get_pos()
-                if area_sair_escolhaNomes.collidepoint(mouse_pos):
-                    menu_tipoDeJogo(tela)
-                elif input_rect.collidepoint(event.pos):
-                    active=True
-                else:
-                    active=False            
-            elif event.type == pygame.KEYDOWN:
-                    if active:
-                        if event.key == pygame.K_RETURN:
-                            print(user1_text)
-                            user1_text=''
-                        elif event.key == pygame.K_BACKSPACE:
-                            user1_text = user1_text[:-1]
-                        else:
-                            user1_text += event.unicode
-        pygame.display.flip() """
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -62,28 +34,49 @@ def escolhaNome(tela):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     print(user1_text)
-                    user1_text = ''
+                    jogo(tela)
                 elif event.key == pygame.K_BACKSPACE:
                     user1_text = user1_text[:-1]
                 else:
-                    user1_text += event.unicode
-            elif event.type == pygame.K_RETURN:
-                jogo(tela)
-                
+                    user1_text += event.unicode    
         tela.blit(fundo, (0,0))
-        #pygame.draw.rect(fundo, (255, 255, 255), input_rect, 1) #Botão para ver  o tamanho da caixa de texto
-        text_surface = fonte.render(user1_text, True, (0, 0, 0)) #Cria a superfície de texto
+        text_surface = fonte.render(user1_text, True, (0, 0, 0)) 
         tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
-        input_rect.w = max(435, text_surface.get_width() + 10) #atualiza a largura do retangulo consoante o tamanho de texto 
-
-        #pygame.draw.rect(tela, (255, 255, 255), area_sair_escolhaNomes);;; Vai aparecer tp um retangulo branco na cena da seta, basicamente é só para ver se o retangulo tá bem posicionado
+        input_rect.w = max(435, text_surface.get_width() + 10) 
         pygame.display.update()
-
         if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
                 menu_tipoDeJogo(tela)
+        pygame.display.update()
 
-        pygame.display.flip()
+def escolhaNome(tela):
+    fonte = pygame.font.Font(None, 50)
+    input_rect = pygame.Rect(470, 470, 435, 100)
+    area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
+    user1_text = ''
+    fundo=pygame.image.load("nome.png")
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    print(user1_text)
+                    jogo(tela)
+                elif event.key == pygame.K_BACKSPACE:
+                    user1_text = user1_text[:-1]
+                else:
+                    user1_text += event.unicode     
+        tela.blit(fundo, (0,0))
+        text_surface = fonte.render(user1_text, True, (0, 0, 0)) 
+        tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
+        input_rect.w = max(435, text_surface.get_width() + 10)
+        pygame.display.update()
+        if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0]:
+                menu_tipoDeJogo(tela)
+        pygame.display.update()
 
 def area1(tela):
     if matriz[0][0]==0:
@@ -290,7 +283,6 @@ def area12(tela):
         pygame.display.update()
         matriz[2][3]=3
 
-
 def jogo(tela):
     while True:
         desenha_tabuleiro(tela)
@@ -392,30 +384,30 @@ def musica(tela):
                     pygame.mixer.music.unpause()
                     tela.blit(imagem_musica, (1235, 655))
                     pygame.display.update()
-        pygame.display.update() 
-                   
-
-
-
+        pygame.display.update()       
 
 def main():
     largura=1366
     altura=768
     tela=pygame.display.set_mode((largura,altura))
+    tela.fill(0xA1CCCC)
+    pygame.display.update()
 
     area_novo_jogo = pygame.Rect(177, 265, 300, 100)
     area_continuar_jogo = pygame.Rect(177, 361, 300, 100)
     area_regras = pygame.Rect(177, 496, 300, 100)
     area_sair = pygame.Rect(177, 600, 300, 100)
 
+    botaonovojogo = pygame.image.load("novo jogo.png")
+    botaocontinuarjogo = pygame.image.load("continuar jogo.png")
+    botaoregras = pygame.image.load("regras botao.png")
+    botaosair = pygame.image.load("sair botao.png")
+
     matriz=[
     [0,0,0,0],
     [0,0,0,0],
     [0,0,0,0]
     ]
-
-    pygame.mixer.music.load("Magical Sound Shower.mp3")
-    pygame.mixer.music.play(-1) 
 
     while True:
         desenha_menu(tela)
@@ -436,4 +428,19 @@ def main():
                     pygame.quit()
                     exit()
 
+        if area_novo_jogo.collidepoint(pygame.mouse.get_pos()):
+            tela.blit(botaonovojogo,(167,251))
+            pygame.display.update()
+        elif area_continuar_jogo.collidepoint(pygame.mouse.get_pos()):
+            tela.blit(botaocontinuarjogo,(162,361))
+            pygame.display.update()
+        elif area_regras.collidepoint(pygame.mouse.get_pos()):
+            tela.blit(botaoregras,(162,490))
+            pygame.display.update()
+        elif area_sair.collidepoint(pygame.mouse.get_pos()):
+            tela.blit(botaosair,(162,597))
+            pygame.display.update()      
+
+pygame.mixer.music.load("Magical Sound Shower.mp3")
+pygame.mixer.music.play(-1) 
 main()

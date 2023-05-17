@@ -73,10 +73,10 @@ def main():
             janela.blit(botaocontinuarjogo,(162,361))
             pygame.display.update()
         elif area_regras.collidepoint(pygame.mouse.get_pos()):
-                    janela.blit(botaoregras,(162,490))
-                    pygame.display.update()
+            janela.blit(botaoregras,(162,490))
+            pygame.display.update()
         elif area_sair.collidepoint(pygame.mouse.get_pos()):
-                    janela.blit(botaosair,(162,597))
-                    pygame.display.update()            
+            janela.blit(botaosair,(162,597))
+            pygame.display.update()            
 
 main()

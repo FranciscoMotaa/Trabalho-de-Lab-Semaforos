@@ -27,7 +27,7 @@ def escolhaNome(tela):
     user1_text = ''
     fundo=pygame.image.load("nome.png")
     while True:
-        input_rect= pygame.Rect(470,470,435,100)
+        """ input_rect= pygame.Rect(470,470,435,100)
         area_sair_escolhaNomes = pygame.Rect(13,665,100,100)
         fundo = pygame.image.load("nome.png")
         tela.blit(fundo, (0,0))

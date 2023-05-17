@@ -32,6 +32,11 @@ def main():
     area_regras = pygame.Rect(177, 496, 300, 100)
     area_sair = pygame.Rect(177, 600, 300, 100)
 
+    botaonovojogo = pygame.image.load("novo jogo.png")
+    botaocontinuarjogo = pygame.image.load("continuar jogo.png")
+    botaoregras = pygame.image.load("regras botao.png")
+    botaosair = pygame.image.load("sair botao.png")
+
     largura=1366
     altura=768
     janela=pygame.display.set_mode((largura,altura))
@@ -60,5 +65,18 @@ def main():
                     elif area_sair.collidepoint(mouse_pos):
                         pygame.quit()
                         exit()
+
+        if area_novo_jogo.collidepoint(pygame.mouse.get_pos()):
+            janela.blit(botaonovojogo,(167,251))
+            pygame.display.update()
+        elif area_continuar_jogo.collidepoint(pygame.mouse.get_pos()):
+            janela.blit(botaocontinuarjogo,(162,361))
+            pygame.display.update()
+        elif area_regras.collidepoint(pygame.mouse.get_pos()):
+                    janela.blit(botaoregras,(162,490))
+                    pygame.display.update()
+        elif area_sair.collidepoint(pygame.mouse.get_pos()):
+                    janela.blit(botaosair,(162,597))
+                    pygame.display.update()            
 
 main()

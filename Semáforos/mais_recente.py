@@ -85,7 +85,7 @@ def area1(tela):
     if matriz[0][0]==0:
         pygame.draw.circle(tela,(0, 255, 0), (60, 63), 40)
         pygame.display.update()
-        matriz[0][0]=1
+        matriz[0][0]= 1
     elif matriz[0][0]==1:
         pygame.draw.circle(tela,(0,0,0),(60,63),40)
         pygame.display.update()
@@ -295,7 +295,8 @@ def jogo(tela):
                 exit()
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = pygame.mouse.get_pos()
-                if x>16 and x<106 and y>16 and y<106:
+                #if x>16 and x<106 and y>16 and y<106:
+                if x>490 and x<937 and y>279 and y<624:
                     area1(tela)
                 if x>116 and x<206 and y>16 and y<106:
                     area2(tela)
@@ -428,7 +429,9 @@ matriz=[
     [0,0,0,0],
     [0,0,0,0]
     ]
-
+pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
-pygame.mixer.music.play(-1) 
+pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.play(-1)
+
 main()

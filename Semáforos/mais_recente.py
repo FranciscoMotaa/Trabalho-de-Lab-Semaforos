@@ -8,6 +8,7 @@ pygame.init()
 def desenha_tabuleiro(tela):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
+        area_regras_ingame = pygame.Rect(113,665,100,100)
         fundo = pygame.image.load("jogo simples.png")
         tela.blit(fundo, (0,0))
         pygame.display.update()
@@ -19,6 +20,8 @@ def desenha_tabuleiro(tela):
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_jogo.collidepoint(mouse_pos):
                     main()
+                if area_regras_ingame.collidepoint(mouse_pos):
+                    menu_regras_ingame(tela)
 
 def escolhaNomes(tela):
     fonte = pygame.font.Font(None, 50)
@@ -317,6 +320,21 @@ def jogo(tela):
                 if x>316 and x<406 and y>216 and y<306:
                     area12(tela)
 
+def menu_regras_ingame(tela):
+    while True:
+        area_sair_regras = pygame.Rect(13, 665, 100, 100)
+        fundo = pygame.image.load("REGRAS.png")
+        tela.blit(fundo, (0,0))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_regras.collidepoint(mouse_pos):
+                    desenha_tabuleiro(tela)
+
 def menu_regras(tela):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
@@ -355,43 +373,15 @@ def menu_tipoDeJogo(tela):
 
 def desenha_menu(tela):
     fundo = pygame.image.load("semaforo menu com peças.png")
-    #imagem_musica = pygame.image.load("com som.png")
     tela.blit(fundo, (0,0))
-    #musica(tela)
-    #tela.blit(imagem_musica, (1235, 655))
     pygame.display.update()
 
-def musica(tela):
-    botao_musica = pygame.Rect(1235, 655, 100, 100)
-    imagem_musica = pygame.image.load("com som.png")
-    imagem_mute = pygame.image.load("sem som.png")
-    tela.blit(imagem_musica, (1235, 655))
-    pygame.display.update()
-    #pygame.mixer.music.load("Magical Sound Shower.mp3")
-    #pygame.mixer.music.play(-1)
-    while True:
-        for event in pygame.event.get():
-            if event.type==QUIT:
-                pygame.quit()
-                exit()
-            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
-                mouse_pos=pygame.mouse.get_pos()
-                if botao_musica.collidepoint(mouse_pos):
-                    pygame.mixer.music.pause()
-                    tela.blit(imagem_mute, (1235, 655))
-                    pygame.display.update()
-                elif botao_musica.collidepoint(mouse_pos):
-                    pygame.mixer.music.unpause()
-                    tela.blit(imagem_musica, (1235, 655))
-                    pygame.display.update()
-        pygame.display.update()       
 
 def main():
     largura=1366
     altura=768
     tela=pygame.display.set_mode((largura,altura))
     tela.fill(0xA1CCCC)
-    pygame.display.update()
 
     area_novo_jogo = pygame.Rect(177, 265, 300, 100)
     area_continuar_jogo = pygame.Rect(177, 361, 300, 100)
@@ -403,15 +393,8 @@ def main():
     botaoregras = pygame.image.load("regras botao.png")
     botaosair = pygame.image.load("sair botao.png")
 
-    matriz=[
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0]
-    ]
-
     while True:
         desenha_menu(tela)
-        #musica(tela)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 pygame.quit()
@@ -427,7 +410,6 @@ def main():
                 elif area_sair.collidepoint(mouse_pos):
                     pygame.quit()
                     exit()
-
         if area_novo_jogo.collidepoint(pygame.mouse.get_pos()):
             tela.blit(botaonovojogo,(167,251))
             pygame.display.update()
@@ -440,6 +422,12 @@ def main():
         elif area_sair.collidepoint(pygame.mouse.get_pos()):
             tela.blit(botaosair,(162,597))
             pygame.display.update()      
+
+matriz=[
+    [0,0,0,0],
+    [0,0,0,0],
+    [0,0,0,0]
+    ]
 
 pygame.mixer.music.load("Magical Sound Shower.mp3")
 pygame.mixer.music.play(-1) 

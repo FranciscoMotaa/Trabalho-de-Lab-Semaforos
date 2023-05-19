@@ -5,7 +5,29 @@ from sys import exit
 
 pygame.init()
 
-def desenha_tabuleiro(tela):
+def carrega_nomes():
+    with open("nomes.txt", "r") as ficheiro_nomes:
+        conteudo = ficheiro_nomes.read()
+        nomes = conteudo.split()
+    return nomes
+
+def guarda_nomes(nome1, nome2):
+    ficheiro_nomes = open("nomes.txt", "w")
+    ficheiro_nomes.write(str(nome1) + " " + str(nome2))
+    ficheiro_nomes.close()
+
+def carrega_matriz():
+    with open("matriz.txt", "r") as ficheiro_matriz:
+        conteudo = ficheiro_matriz.read()
+        matriz = eval(conteudo)
+    return matriz
+
+def guarda_matriz(matriz):
+    ficheiro_matriz = open("matriz.txt", "w")
+    ficheiro_matriz.write(str(matriz))
+    ficheiro_matriz.close()
+
+def desenha_tabuleiro(tela, matriz, nome1, nome2):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
@@ -19,16 +41,32 @@ def desenha_tabuleiro(tela):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_jogo.collidepoint(mouse_pos):
-                    main()
+                    guarda_nomes()
+                    guarda_matriz(matriz)
+                    main(matriz, nome1, nome2)
                 if area_regras_ingame.collidepoint(mouse_pos):
-                    menu_regras_ingame(tela)
+                    menu_regras_ingame(tela, matriz, nome1, nome2)
+            else:
+                area1_carregar(tela,matriz)
+                area2_carregar(tela,matriz)
+                area3_carregar(tela,matriz)
+                area4_carregar(tela,matriz)
+                area5_carregar(tela,matriz)
+                area6_carregar(tela,matriz)
+                area7_carregar(tela,matriz)
+                area8_carregar(tela,matriz)
+                area9_carregar(tela,matriz)
+                area10_carregar(tela,matriz)
+                area11_carregar(tela,matriz)
+                area12_carregar(tela,matriz)
+                jogo(tela, matriz, nome1, nome2)
 
-def escolhaNomes(tela):
+def escolhaNome1(tela, matriz):
     fonte = pygame.font.Font(None, 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
-    user1_text = ''
-    fundo=pygame.image.load("nomes.png")
+    user_text = ''
+    fundo1=pygame.image.load("nome jogador 1.png")
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -36,27 +74,56 @@ def escolhaNomes(tela):
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    print(user1_text)
-                    jogo(tela)
+                    nome1=user_text
+                    escolhaNome2(tela, matriz, nome1)
                 elif event.key == pygame.K_BACKSPACE:
-                    user1_text = user1_text[:-1]
+                    user_text = user_text[:-1]
                 else:
-                    user1_text += event.unicode    
-        tela.blit(fundo, (0,0))
-        text_surface = fonte.render(user1_text, True, (0, 0, 0)) 
+                    user_text += event.unicode    
+        tela.blit(fundo1, (0,0))
+        text_surface = fonte.render(user_text, True, (0, 0, 0)) 
         tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
         input_rect.w = max(435, text_surface.get_width() + 10) 
         pygame.display.update()
         if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
-                menu_tipoDeJogo(tela)
+                menu_tipoDeJogo(tela, matriz)
         pygame.display.update()
-
-def escolhaNome(tela):
+    
+def escolhaNome2(tela, matriz, nome1):
     fonte = pygame.font.Font(None, 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
-    user1_text = ''
+    user_text = ''
+    fundo2=pygame.image.load("nome jogador 2.png")
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    nome2=user_text
+                    desenha_tabuleiro(tela, matriz, nome1, nome2)
+                elif event.key == pygame.K_BACKSPACE:
+                    user_text = user_text[:-1]
+                else:
+                    user_text += event.unicode    
+        tela.blit(fundo2, (0,0))
+        text_surface = fonte.render(user_text, True, (0, 0, 0)) 
+        tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
+        input_rect.w = max(435, text_surface.get_width() + 10) 
+        pygame.display.update()
+        if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0]:
+                menu_tipoDeJogo(tela, matriz)
+        pygame.display.update()
+
+def escolhaNome(tela, matriz):
+    fonte = pygame.font.Font(None, 50)
+    input_rect = pygame.Rect(470, 470, 435, 100)
+    area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
+    user_text = ''
     fundo=pygame.image.load("nome.png")
     while True:
         for event in pygame.event.get():
@@ -65,263 +132,561 @@ def escolhaNome(tela):
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    print(user1_text)
-                    jogo(tela)
+                    nome=user_text
+                    desenha_tabuleiro(tela, matriz, nome)
                 elif event.key == pygame.K_BACKSPACE:
-                    user1_text = user1_text[:-1]
+                    user_text = user_text[:-1]
                 else:
-                    user1_text += event.unicode     
+                    user_text += event.unicode     
         tela.blit(fundo, (0,0))
-        text_surface = fonte.render(user1_text, True, (0, 0, 0)) 
+        text_surface = fonte.render(user_text, True, (0, 0, 0)) 
         tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
         input_rect.w = max(435, text_surface.get_width() + 10)
         pygame.display.update()
         if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
-                menu_tipoDeJogo(tela)
+                menu_tipoDeJogo(tela, matriz)
         pygame.display.update()
 
-def area1(tela):
+def area1(tela, matriz):
     if matriz[0][0]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (60, 63), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (504.5,299))
         pygame.display.update()
         matriz[0][0]= 1
     elif matriz[0][0]==1:
-        pygame.draw.circle(tela,(0,0,0),(60,63),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,279))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(60,63))
+        tela.blit(triangulo,(504.5,299))
         pygame.display.update()
         matriz[0][0]=2
     elif matriz[0][0]==2:
-        draw_triangle(tela,(0,0,0),(60,63))
-        rect = pygame.Rect(37.5, 37.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,279))
+        pygame.display.update()
+        tela.blit(quadrado,(504.5,299))
         pygame.display.update()
         matriz[0][0]=3
-def area2(tela):
+    print(matriz)
+def area2(tela, matriz):
     if matriz[0][1]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (160, 63), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (618.5,299))
         pygame.display.update()
         matriz[0][1]=1
     elif matriz[0][1]==1:
-        pygame.draw.circle(tela,(0,0,0),(160,63),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,279))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(160,63))
+        tela.blit(triangulo,(618.5,299))
         pygame.display.update()
         matriz[0][1]=2
     elif matriz[0][1]==2:
-        draw_triangle(tela,(0,0,0),(160,63))
-        rect = pygame.Rect(137.5, 37.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,279))
+        pygame.display.update()
+        tela.blit(quadrado,(618.5,299))
         pygame.display.update()
         matriz[0][1]=3
-def area3(tela):
+def area3(tela, matriz):
     if matriz[0][2]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (260, 63), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (732.5,299))
         pygame.display.update()
         matriz[0][2]=1
     elif matriz[0][2]==1:
-        pygame.draw.circle(tela,(0,0,0),(260,63),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,279))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(260,63))
+        tela.blit(triangulo,(732.5,299))
         pygame.display.update()
         matriz[0][2]=2
     elif matriz[0][2]==2:
-        draw_triangle(tela,(0,0,0),(260,63))
-        rect = pygame.Rect(237.5, 37.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,279))
+        pygame.display.update()
+        tela.blit(quadrado,(732.5,299))
         pygame.display.update()
         matriz[0][2]=3
-def area4(tela):
+def area4(tela, matriz):
     if matriz[0][3]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (360, 63), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (846.5,299))
         pygame.display.update()
         matriz[0][3]=1
     elif matriz[0][3]==1:
-        pygame.draw.circle(tela,(0,0,0),(360,63),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,279))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(360,63))
+        tela.blit(triangulo,(846.5,299))
         pygame.display.update()
         matriz[0][3]=2
     elif matriz[0][3]==2:
-        draw_triangle(tela,(0,0,0),(360,63))
-        rect = pygame.Rect(337.5, 37.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,279))
+        pygame.display.update()
+        tela.blit(quadrado,(846.5,299))
         pygame.display.update()
         matriz[0][3]=3
-def area5(tela):
+def area5(tela, matriz):
     if matriz[1][0]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (60, 163), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (504.5,417))
         pygame.display.update()
         matriz[1][0]=1
     elif matriz[1][0]==1:
-        pygame.draw.circle(tela,(0,0,0),(60,163),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,397))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(60,163))
+        tela.blit(triangulo,(504.5,417))
         pygame.display.update()
         matriz[1][0]=2
     elif matriz[1][0]==2:
-        draw_triangle(tela,(0,0,0),(60,163))
-        rect = pygame.Rect(37.5, 137.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,397))
+        pygame.display.update()
+        tela.blit(quadrado,(504.5,417))
         pygame.display.update()
         matriz[1][0]=3
-def area6(tela):
+def area6(tela, matriz):
     if matriz[1][1]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (160, 163), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (618.5,417))
         pygame.display.update()
         matriz[1][1]=1
     elif matriz[1][1]==1:
-        pygame.draw.circle(tela,(0,0,0),(160,163),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,397))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(160,163))
+        tela.blit(triangulo,(618.5,417))
         pygame.display.update()
         matriz[1][1]=2
     elif matriz[1][1]==2:
-        draw_triangle(tela,(0,0,0),(160,163))
-        rect = pygame.Rect(137.5, 137.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,397))
+        pygame.display.update()
+        tela.blit(quadrado,(618.5,417))
         pygame.display.update()
         matriz[1][1]=3
-def area7(tela):
+def area7(tela, matriz):
     if matriz[1][2]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (260, 163), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (732.5,417))
         pygame.display.update()
         matriz[1][2]=1
     elif matriz[1][2]==1:
-        pygame.draw.circle(tela,(0,0,0),(260,163),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,397))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(260,163))
+        tela.blit(triangulo,(732.5,417))
         pygame.display.update()
         matriz[1][2]=2
     elif matriz[1][2]==2:
-        draw_triangle(tela,(0,0,0),(260,163))
-        rect = pygame.Rect(237.5, 137.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,397))
+        pygame.display.update()
+        tela.blit(quadrado,(732.5,417))
         pygame.display.update()
         matriz[1][2]=3
-def area8(tela):
+def area8(tela, matriz):
     if matriz[1][3]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (360, 163), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (846.5,417))
         pygame.display.update()
         matriz[1][3]=1
     elif matriz[1][3]==1:
-        pygame.draw.circle(tela,(0,0,0),(360,163),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,397))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(360,163))
+        tela.blit(triangulo,(846.5,417))
         pygame.display.update()
         matriz[1][3]=2
     elif matriz[1][3]==2:
-        draw_triangle(tela,(0,0,0),(360,163))
-        rect = pygame.Rect(337.5, 137.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,397))
+        pygame.display.update()
+        tela.blit(quadrado,(846.5,417))
         pygame.display.update()
         matriz[1][3]=3
-def area9(tela):
+def area9(tela, matriz):
     if matriz[2][0]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (60, 263), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (504.5,535))
         pygame.display.update()
         matriz[2][0]=1
     elif matriz[2][0]==1:
-        pygame.draw.circle(tela,(0,0,0),(60,263),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,515))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(60,263))
+        tela.blit(triangulo,(504.5,535))
         pygame.display.update()
         matriz[2][0]=2
     elif matriz[2][0]==2:
-        draw_triangle(tela,(0,0,0),(60,263))
-        rect = pygame.Rect(37.5, 237.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,515))
+        pygame.display.update()
+        tela.blit(quadrado,(504.5,535))
         pygame.display.update()
         matriz[2][0]=3
-def area10(tela):
+def area10(tela, matriz):
     if matriz[2][1]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (160, 263), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (618.5,535))
         pygame.display.update()
         matriz[2][1]=1
     elif matriz[2][1]==1:
-        pygame.draw.circle(tela,(0,0,0),(160,263),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,515))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(160,263))
+        tela.blit(triangulo,(618.5,535))
         pygame.display.update()
         matriz[2][1]=2
     elif matriz[2][1]==2:
-        draw_triangle(tela,(0,0,0),(160,263))
-        rect = pygame.Rect(137.5, 237.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,515))
+        pygame.display.update()
+        tela.blit(quadrado,(618.5,535))
         pygame.display.update()
         matriz[2][1]=3
-def area11(tela):
+def area11(tela, matriz):
     if matriz[2][2]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (260, 263), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (732.5,535))
         pygame.display.update()
         matriz[2][2]=1
     elif matriz[2][2]==1:
-        pygame.draw.circle(tela,(0,0,0),(260,263),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,515))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(260,263))
+        tela.blit(triangulo,(732.5,535))
         pygame.display.update()
         matriz[2][2]=2
     elif matriz[2][2]==2:
-        draw_triangle(tela,(0,0,0),(260,263))
-        rect = pygame.Rect(237.5, 237.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,515))
+        pygame.display.update()
+        tela.blit(quadrado,(732.5,535))
         pygame.display.update()
         matriz[2][2]=3
-def area12(tela):
+def area12(tela, matriz):
     if matriz[2][3]==0:
-        pygame.draw.circle(tela,(0, 255, 0), (360, 263), 40)
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (846.5,535))
         pygame.display.update()
         matriz[2][3]=1
     elif matriz[2][3]==1:
-        pygame.draw.circle(tela,(0,0,0),(360,263),40)
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,515))
         pygame.display.update()
-        draw_triangle(tela,(255,255,0),(360,263))
+        tela.blit(triangulo,(846.5,535))
         pygame.display.update()
         matriz[2][3]=2
     elif matriz[2][3]==2:
-        draw_triangle(tela,(0,0,0),(360,263))
-        rect = pygame.Rect(337.5, 237.5, 50, 50)
-        pygame.draw.rect(tela, (255,0,0), rect)
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,515))
+        pygame.display.update()
+        tela.blit(quadrado,(846.5,535))
         pygame.display.update()
         matriz[2][3]=3
 
-def jogo(tela):
+def area1_carregar(tela, matriz):
+    if matriz[0][0]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (504.5,299))
+        pygame.display.update()
+    elif matriz[0][0]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,279))
+        pygame.display.update()
+        tela.blit(triangulo,(504.5,299))
+        pygame.display.update()
+    elif matriz[0][0]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,279))
+        pygame.display.update()
+        tela.blit(quadrado,(504.5,299))
+        pygame.display.update()
+    print(matriz)
+def area2_carregar(tela, matriz):
+    if matriz[0][1]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (618.5,299))
+        pygame.display.update()
+    elif matriz[0][1]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,279))
+        pygame.display.update()
+        tela.blit(triangulo,(618.5,299))
+        pygame.display.update()
+    elif matriz[0][1]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,279))
+        pygame.display.update()
+        tela.blit(quadrado,(618.5,299))
+        pygame.display.update()
+def area3_carregar(tela, matriz):
+    if matriz[0][2]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (732.5,299))
+        pygame.display.update()
+    elif matriz[0][2]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,279))
+        pygame.display.update()
+        tela.blit(triangulo,(732.5,299))
+        pygame.display.update()
+    elif matriz[0][2]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,279))
+        pygame.display.update()
+        tela.blit(quadrado,(732.5,299))
+        pygame.display.update()
+def area4_carregar(tela, matriz):
+    if matriz[0][3]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (846.5,299))
+        pygame.display.update()
+    elif matriz[0][3]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,279))
+        pygame.display.update()
+        tela.blit(triangulo,(846.5,299))
+        pygame.display.update()
+    elif matriz[0][3]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,279))
+        pygame.display.update()
+        tela.blit(quadrado,(846.5,299))
+        pygame.display.update()
+def area5_carregar(tela, matriz):
+    if matriz[1][0]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (504.5,417))
+        pygame.display.update()
+    elif matriz[1][0]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,397))
+        pygame.display.update()
+        tela.blit(triangulo,(504.5,417))
+        pygame.display.update()
+    elif matriz[1][0]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,397))
+        pygame.display.update()
+        tela.blit(quadrado,(504.5,417))
+        pygame.display.update()
+def area6_carregar(tela, matriz):
+    if matriz[1][1]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (618.5,417))
+        pygame.display.update()
+    elif matriz[1][1]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,397))
+        pygame.display.update()
+        tela.blit(triangulo,(618.5,417))
+        pygame.display.update()
+    elif matriz[1][1]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,397))
+        pygame.display.update()
+        tela.blit(quadrado,(618.5,417))
+        pygame.display.update()
+def area7_carregar(tela, matriz):
+    if matriz[1][2]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (732.5,417))
+        pygame.display.update()
+    elif matriz[1][2]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,397))
+        pygame.display.update()
+        tela.blit(triangulo,(732.5,417))
+        pygame.display.update()
+    elif matriz[1][2]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,397))
+        pygame.display.update()
+        tela.blit(quadrado,(732.5,417))
+        pygame.display.update()
+def area8_carregar(tela, matriz):
+    if matriz[1][3]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (846.5,417))
+        pygame.display.update()
+    elif matriz[1][3]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,397))
+        pygame.display.update()
+        tela.blit(triangulo,(846.5,417))
+        pygame.display.update()
+    elif matriz[1][3]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,397))
+        pygame.display.update()
+        tela.blit(quadrado,(846.5,417))
+        pygame.display.update()
+def area9_carregar(tela, matriz):
+    if matriz[2][0]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (504.5,535))
+        pygame.display.update()
+    elif matriz[2][0]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,515))
+        pygame.display.update()
+        tela.blit(triangulo,(504.5,535))
+        pygame.display.update()
+    elif matriz[2][0]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(487,515))
+        pygame.display.update()
+        tela.blit(quadrado,(504.5,535))
+        pygame.display.update()
+def area10_carregar(tela, matriz):
+    if matriz[2][1]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (618.5,535))
+        pygame.display.update()
+    elif matriz[2][1]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,515))
+        pygame.display.update()
+        tela.blit(triangulo,(618.5,535))
+        pygame.display.update()
+    elif matriz[2][1]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(601,515))
+        pygame.display.update()
+        tela.blit(quadrado,(618.5,535))
+        pygame.display.update()
+def area11_carregar(tela, matriz):
+    if matriz[2][2]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (732.5,535))
+        pygame.display.update()
+    elif matriz[2][2]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,515))
+        pygame.display.update()
+        tela.blit(triangulo,(732.5,535))
+        pygame.display.update()
+    elif matriz[2][2]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(715,515))
+        pygame.display.update()
+        tela.blit(quadrado,(732.5,535))
+        pygame.display.update()
+def area12_carregar(tela, matriz):
+    if matriz[2][3]==1:
+        circulo=pygame.image.load("bola.png")
+        tela.blit(circulo, (846.5,535))
+        pygame.display.update()
+    elif matriz[2][3]==2:
+        triangulo=pygame.image.load("triangulo.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,515))
+        pygame.display.update()
+        tela.blit(triangulo,(846.5,535))
+        pygame.display.update()
+    elif matriz[2][3]==3:
+        quadrado=pygame.image.load("quadrado.png")
+        apagar=pygame.image.load("quadrado tabuleiro.png")
+        tela.blit(apagar,(829,515))
+        pygame.display.update()
+        tela.blit(quadrado,(846.5,535))
+        pygame.display.update()
+
+def jogo(tela, matriz, nome1, nome2):
     while True:
-        desenha_tabuleiro(tela)
+        area_sair_jogo = pygame.Rect(13,665,100,100)
+        area_regras_ingame = pygame.Rect(113,665,100,100)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                 x, y = pygame.mouse.get_pos()
-                #if x>16 and x<106 and y>16 and y<106:
-                if x>490 and x<937 and y>279 and y<624:
-                    area1(tela)
-                if x>116 and x<206 and y>16 and y<106:
-                    area2(tela)
-                if x>216 and x<306 and y>16 and y<106:
-                    area3(tela)
-                if x>316 and x<406 and y>16 and y<106:
-                    area4(tela)
-                if x>16 and x<106 and y>116 and y<206:
-                    area5(tela)
-                if x>116 and x<206 and y>116 and y<206:
-                    area6(tela)
-                if x>216 and x<306 and y>116 and y<206:
-                    area7(tela)
-                if x>316 and x<406 and y>116 and y<206:
-                    area8(tela)
-                if x>16 and x<106 and y>216 and y<306:
-                    area9(tela)
-                if x>116 and x<206 and y>216 and y<306:
-                    area10(tela)
-                if x>216 and x<306 and y>216 and y<306:
-                    area11(tela)
-                if x>316 and x<406 and y>216 and y<306:
-                    area12(tela)
+                mouse_pos=pygame.mouse.get_pos()
+                if x>487 and x<594 and y>279 and y<391:
+                    area1(tela, matriz)
+                if x>601 and x<708 and y>279 and y<391:
+                    area2(tela, matriz)
+                if x>715 and x<822 and y>279 and y<391:
+                    area3(tela, matriz)
+                if x>829 and x<936 and y>279 and y<391:
+                    area4(tela, matriz)
+                if x>487 and x<594 and y>397 and y<510:
+                    area5(tela, matriz)
+                if x>601 and x<708 and y>397 and y<510:
+                    area6(tela, matriz)
+                if x>715 and x<822 and y>397 and y<510:
+                    area7(tela, matriz)
+                if x>829 and x<936 and y>397 and y<510:
+                    area8(tela, matriz)
+                if x>487 and x<594 and y>515 and y<628:
+                    area9(tela, matriz)
+                if x>601 and x<708 and y>515 and y<628:
+                    area10(tela, matriz)
+                if x>715 and x<822 and y>515 and y<628:
+                    area11(tela, matriz)
+                if x>829 and x<936 and y>515 and y<628:
+                    area12(tela, matriz)
+                if area_sair_jogo.collidepoint(mouse_pos):
+                    main(matriz, nome1, nome2)
+                    guarda_matriz(matriz)
+                if area_regras_ingame.collidepoint(mouse_pos):
+                    menu_regras_ingame(tela, matriz, nome1, nome2)
+                    guarda_matriz(matriz)
 
-def menu_regras_ingame(tela):
+def menu_regras_ingame(tela, matriz, nome1, nome2):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
         fundo = pygame.image.load("REGRAS.png")
@@ -334,9 +699,10 @@ def menu_regras_ingame(tela):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_regras.collidepoint(mouse_pos):
-                    desenha_tabuleiro(tela)
+                    carrega_matriz()
+                    desenha_tabuleiro(tela, matriz, nome1, nome2)
 
-def menu_regras(tela):
+def menu_regras(tela, matriz):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
         fundo = pygame.image.load("REGRAS.png")
@@ -349,9 +715,9 @@ def menu_regras(tela):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_regras.collidepoint(mouse_pos):
-                    main()
+                    main(matriz, nome1, nome2)
 
-def menu_tipoDeJogo(tela):
+def menu_tipoDeJogo(tela, matriz):
     while True:
         area_sair_escolha_jogadores = pygame.Rect(13,665,100,100)
         area_singleplayer = pygame.Rect(320,434,355,100)
@@ -366,19 +732,18 @@ def menu_tipoDeJogo(tela):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_escolha_jogadores.collidepoint(mouse_pos):
-                    main()
+                    main(matriz, nome1, nome2)
                 elif area_singleplayer.collidepoint(mouse_pos):
-                    escolhaNome(tela)
+                    escolhaNome(tela, matriz)
                 elif area_multiplayer.collidepoint(mouse_pos):
-                    escolhaNomes(tela)
+                    escolhaNome1(tela, matriz)
 
-def desenha_menu(tela):
+def desenha_menu(tela, matriz):
     fundo = pygame.image.load("semaforo menu com peças.png")
     tela.blit(fundo, (0,0))
     pygame.display.update()
 
-
-def main():
+def main(matriz, nome1, nome2):
     largura=1366
     altura=768
     tela=pygame.display.set_mode((largura,altura))
@@ -395,7 +760,7 @@ def main():
     botaosair = pygame.image.load("sair botao.png")
 
     while True:
-        desenha_menu(tela)
+        desenha_menu(tela, matriz)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 pygame.quit()
@@ -403,11 +768,18 @@ def main():
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_novo_jogo.collidepoint(mouse_pos):
-                    menu_tipoDeJogo(tela)
+                    matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+                    menu_tipoDeJogo(tela, matriz)
                 elif area_continuar_jogo.collidepoint(mouse_pos):
-                    print("Continuar jogo")
+                    nomes_carregados=carrega_nomes()
+                    nome1=nomes_carregados[0]
+                    nome2=nomes_carregados[1]
+                    print(nome1)
+                    print(nome2)
+                    carrega_matriz()
+                    desenha_tabuleiro(tela, matriz, nome1, nome2)
                 elif area_regras.collidepoint(mouse_pos):
-                    menu_regras(tela)
+                    menu_regras(tela, matriz)
                 elif area_sair.collidepoint(mouse_pos):
                     pygame.quit()
                     exit()
@@ -424,14 +796,13 @@ def main():
             tela.blit(botaosair,(162,597))
             pygame.display.update()      
 
-matriz=[
-    [0,0,0,0],
-    [0,0,0,0],
-    [0,0,0,0]
-    ]
+matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+nome1='Player1'
+nome2='Player2'
+
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
 pygame.mixer.music.set_volume(0.4)
 pygame.mixer.music.play(-1)
 
-main()
+main(matriz, nome1, nome2)

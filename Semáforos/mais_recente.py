@@ -801,7 +801,7 @@ nome2='Player2'
 
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.2)
 pygame.mixer.music.play(-1)
 
 main(matriz, nome1, nome2)

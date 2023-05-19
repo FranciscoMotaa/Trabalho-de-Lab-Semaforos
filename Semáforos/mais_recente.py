@@ -913,6 +913,7 @@ matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 nome1='Player1'
 nome2='Player2'
 
+pygame.display.set_caption("Semáforo!")
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
 pygame.mixer.music.set_volume(0.1)

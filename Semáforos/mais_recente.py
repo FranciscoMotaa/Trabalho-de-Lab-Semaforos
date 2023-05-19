@@ -5,6 +5,7 @@ from sys import exit
 
 pygame.init()
 
+
 def carrega_nomes():
     with open("nomes.txt", "r") as ficheiro_nomes:
         conteudo = ficheiro_nomes.read()
@@ -65,7 +66,7 @@ def desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
-        fundo = pygame.image.load("jogo simples.png")
+        fundo = pygame.image.load("vez do jogador.png")
         tela.blit(fundo, (0,0))
         pygame.display.update()
         for event in pygame.event.get():
@@ -723,6 +724,13 @@ def jogo_multiplayer(tela, matriz, nome1, nome2):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
+        fonte = pygame.font.Font(None, 36)
+        vez_do_jogador=0
+        if vez_do_jogador==0:
+            texto_surface = fonte.render("Vez do {nome1}", True, (255, 255, 255))
+        else:
+            texto_surface = fonte.render("Vez do {nome2}", True, (255,255,255))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()

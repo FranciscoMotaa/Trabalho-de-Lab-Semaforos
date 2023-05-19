@@ -88,7 +88,7 @@ def escolhaNome(tela, matriz):
         pygame.display.update()
         if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
             if pygame.mouse.get_pressed()[0]:
-                main(tela, matriz)
+                main()
         pygame.display.update()
 
 def area1(tela, matriz):
@@ -622,8 +622,8 @@ def jogo_singleplayer(tela, matriz, nome):
                 if x>829 and x<936 and y>515 and y<628:
                     area12(tela, matriz)
                 if area_sair_jogo.collidepoint(mouse_pos):
-                    main(matriz, nome)
                     guarda_matriz(matriz)
+                    main()
                 if area_regras_ingame.collidepoint(mouse_pos):
                     menu_regras_ingame_singleplayer(tela, matriz, nome)
                     guarda_matriz(matriz)
@@ -644,7 +644,7 @@ def menu_regras_ingame_singleplayer(tela, matriz, nome):
                     carrega_matriz()
                     desenha_tabuleiro_singleplayer(tela, matriz, nome)
 
-def menu_regras(tela, matriz):
+def menu_regras(tela):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
         fundo = pygame.image.load("REGRAS.png")
@@ -657,14 +657,14 @@ def menu_regras(tela, matriz):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_regras.collidepoint(mouse_pos):
-                    main(matriz, nome)
+                    main()
 
-def desenha_menu(tela, matriz):
+def desenha_menu(tela):
     fundo = pygame.image.load("semaforo menu com peças.png")
     tela.blit(fundo, (0,0))
     pygame.display.update()
 
-def main(matriz, nome):
+def main():
     largura=1366
     altura=768
     tela=pygame.display.set_mode((largura,altura))
@@ -681,7 +681,7 @@ def main(matriz, nome):
     botaosair = pygame.image.load("sair botao.png")
 
     while True:
-        desenha_menu(tela, matriz)
+        desenha_menu(tela)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 pygame.quit()
@@ -692,13 +692,13 @@ def main(matriz, nome):
                     matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
                     escolhaNome(tela, matriz)
                 elif area_continuar_jogo.collidepoint(mouse_pos):
-                    carrega_nome()
+                    nome=carrega_nome()
                     print(nome)
+                    matriz=carrega_matriz()
                     print(matriz)
-                    carrega_matriz()
                     desenha_tabuleiro_singleplayer(tela, matriz, nome)
                 elif area_regras.collidepoint(mouse_pos):
-                    menu_regras(tela, matriz)
+                    menu_regras(tela)
                 elif area_sair.collidepoint(mouse_pos):
                     guarda_nome(nome)
                     guarda_matriz(matriz)
@@ -717,16 +717,14 @@ def main(matriz, nome):
             tela.blit(botaosair,(162,597))
             pygame.display.update()      
 
-matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-nome=''
-guarda_matriz(matriz)
-guarda_nome(nome)
-carrega_matriz()
-carrega_nome()
+# matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+# nome=''
+# guarda_matriz(matriz)
+# guarda_nome(nome)
 
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
 pygame.mixer.music.set_volume(0.1)
 pygame.mixer.music.play(-1)
 
-main(matriz, nome)
+main()

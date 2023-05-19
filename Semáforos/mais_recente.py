@@ -5,6 +5,7 @@ from sys import exit
 
 pygame.init()
 
+
 def carrega_nomes():
     with open("nomes.txt", "r") as ficheiro_nomes:
         conteudo = ficheiro_nomes.read()
@@ -27,7 +28,7 @@ def guarda_matriz(matriz):
     ficheiro_matriz.write(str(matriz))
     ficheiro_matriz.close()
 
-def desenha_tabuleiro(tela, matriz, nome1, nome2):
+def desenha_tabuleiro_singleplayer(tela, matriz, nome):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
@@ -41,11 +42,11 @@ def desenha_tabuleiro(tela, matriz, nome1, nome2):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_jogo.collidepoint(mouse_pos):
-                    guarda_nomes()
+                    guarda_nomes(nome)
                     guarda_matriz(matriz)
-                    main(matriz, nome1, nome2)
+                    main(matriz, nome)
                 if area_regras_ingame.collidepoint(mouse_pos):
-                    menu_regras_ingame(tela, matriz, nome1, nome2)
+                    menu_regras_ingame_singleplayer(tela, matriz, nome)
             else:
                 area1_carregar(tela,matriz)
                 area2_carregar(tela,matriz)
@@ -59,7 +60,41 @@ def desenha_tabuleiro(tela, matriz, nome1, nome2):
                 area10_carregar(tela,matriz)
                 area11_carregar(tela,matriz)
                 area12_carregar(tela,matriz)
-                jogo(tela, matriz, nome1, nome2)
+                jogo_singleplayer(tela, matriz, nome)
+
+def desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2):
+    while True:
+        area_sair_jogo = pygame.Rect(13,665,100,100)
+        area_regras_ingame = pygame.Rect(113,665,100,100)
+        fundo = pygame.image.load("vez do jogador.png")
+        tela.blit(fundo, (0,0))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_jogo.collidepoint(mouse_pos):
+                    guarda_nomes(nome1, nome2)
+                    guarda_matriz(matriz)
+                    main(matriz, nome1, nome2)
+                if area_regras_ingame.collidepoint(mouse_pos):
+                    menu_regras_ingame_multiplayer(tela, matriz, nome1, nome2)
+            else:
+                area1_carregar(tela,matriz)
+                area2_carregar(tela,matriz)
+                area3_carregar(tela,matriz)
+                area4_carregar(tela,matriz)
+                area5_carregar(tela,matriz)
+                area6_carregar(tela,matriz)
+                area7_carregar(tela,matriz)
+                area8_carregar(tela,matriz)
+                area9_carregar(tela,matriz)
+                area10_carregar(tela,matriz)
+                area11_carregar(tela,matriz)
+                area12_carregar(tela,matriz)
+                jogo_multiplayer(tela, matriz, nome1, nome2)
 
 def escolhaNome1(tela, matriz):
     fonte = pygame.font.Font(None, 50)
@@ -104,7 +139,7 @@ def escolhaNome2(tela, matriz, nome1):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     nome2=user_text
-                    desenha_tabuleiro(tela, matriz, nome1, nome2)
+                    desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2)
                 elif event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 else:
@@ -133,7 +168,7 @@ def escolhaNome(tela, matriz):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     nome1=user_text
-                    desenha_tabuleiro(tela, matriz, nome1, nome2)
+                    desenha_tabuleiro_singleplayer(tela, matriz, nome1)
                 elif event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 else:
@@ -643,7 +678,7 @@ def area12_carregar(tela, matriz):
         tela.blit(quadrado,(846.5,535))
         pygame.display.update()
 
-def jogo(tela, matriz, nome1, nome2):
+def jogo_singleplayer(tela, matriz, nome):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
@@ -682,10 +717,59 @@ def jogo(tela, matriz, nome1, nome2):
                     main(matriz, nome1, nome2)
                     guarda_matriz(matriz)
                 if area_regras_ingame.collidepoint(mouse_pos):
-                    menu_regras_ingame(tela, matriz, nome1, nome2)
+                    menu_regras_ingame_singleplayer(tela, matriz, nome)
                     guarda_matriz(matriz)
 
-def menu_regras_ingame(tela, matriz, nome1, nome2):
+def jogo_multiplayer(tela, matriz, nome1, nome2):
+    while True:
+        area_sair_jogo = pygame.Rect(13,665,100,100)
+        area_regras_ingame = pygame.Rect(113,665,100,100)
+        fonte = pygame.font.Font(None, 36)
+        vez_do_jogador=0
+        if vez_do_jogador==0:
+            texto_surface = fonte.render("Vez do {nome1}", True, (255, 255, 255))
+        else:
+            texto_surface = fonte.render("Vez do {nome2}", True, (255,255,255))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+                x, y = pygame.mouse.get_pos()
+                mouse_pos=pygame.mouse.get_pos()
+                if x>487 and x<594 and y>279 and y<391:
+                    area1(tela, matriz)
+                if x>601 and x<708 and y>279 and y<391:
+                    area2(tela, matriz)
+                if x>715 and x<822 and y>279 and y<391:
+                    area3(tela, matriz)
+                if x>829 and x<936 and y>279 and y<391:
+                    area4(tela, matriz)
+                if x>487 and x<594 and y>397 and y<510:
+                    area5(tela, matriz)
+                if x>601 and x<708 and y>397 and y<510:
+                    area6(tela, matriz)
+                if x>715 and x<822 and y>397 and y<510:
+                    area7(tela, matriz)
+                if x>829 and x<936 and y>397 and y<510:
+                    area8(tela, matriz)
+                if x>487 and x<594 and y>515 and y<628:
+                    area9(tela, matriz)
+                if x>601 and x<708 and y>515 and y<628:
+                    area10(tela, matriz)
+                if x>715 and x<822 and y>515 and y<628:
+                    area11(tela, matriz)
+                if x>829 and x<936 and y>515 and y<628:
+                    area12(tela, matriz)
+                if area_sair_jogo.collidepoint(mouse_pos):
+                    main(matriz, nome1, nome2)
+                    guarda_matriz(matriz)
+                if area_regras_ingame.collidepoint(mouse_pos):
+                    menu_regras_ingame_multiplayer(tela, matriz, nome1, nome2)
+                    guarda_matriz(matriz)
+
+def menu_regras_ingame_multiplayer(tela, matriz, nome1, nome2):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
         fundo = pygame.image.load("REGRAS.png")
@@ -699,7 +783,23 @@ def menu_regras_ingame(tela, matriz, nome1, nome2):
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_regras.collidepoint(mouse_pos):
                     carrega_matriz()
-                    desenha_tabuleiro(tela, matriz, nome1, nome2)
+                    desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2)
+
+def menu_regras_ingame_singleplayer(tela, matriz, nome):
+    while True:
+        area_sair_regras = pygame.Rect(13, 665, 100, 100)
+        fundo = pygame.image.load("REGRAS.png")
+        tela.blit(fundo, (0,0))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_regras.collidepoint(mouse_pos):
+                    carrega_matriz()
+                    desenha_tabuleiro_singleplayer(tela, matriz, nome)
 
 def menu_regras(tela, matriz):
     while True:
@@ -801,7 +901,7 @@ nome2='Player2'
 
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(0.1)
 pygame.mixer.music.play(-1)
 
 main(matriz, nome1, nome2)

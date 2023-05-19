@@ -132,8 +132,8 @@ def escolhaNome(tela, matriz):
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    nome=user_text
-                    desenha_tabuleiro(tela, matriz, nome)
+                    nome1=user_text
+                    desenha_tabuleiro(tela, matriz, nome1, nome2)
                 elif event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 else:
@@ -170,7 +170,6 @@ def area1(tela, matriz):
         tela.blit(quadrado,(504.5,299))
         pygame.display.update()
         matriz[0][0]=3
-    print(matriz)
 def area2(tela, matriz):
     if matriz[0][1]==0:
         circulo=pygame.image.load("bola.png")

@@ -717,11 +717,6 @@ def main():
             tela.blit(botaosair,(162,597))
             pygame.display.update()      
 
-# matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-# nome=''
-# guarda_matriz(matriz)
-# guarda_nome(nome)
-
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
 pygame.mixer.music.set_volume(0.1)

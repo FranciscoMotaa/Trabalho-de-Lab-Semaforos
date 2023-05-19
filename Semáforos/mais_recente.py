@@ -5,7 +5,6 @@ from sys import exit
 
 pygame.init()
 
-
 def carrega_nomes():
     with open("nomes.txt", "r") as ficheiro_nomes:
         conteudo = ficheiro_nomes.read()
@@ -898,7 +897,7 @@ def main(matriz, nome1, nome2):
 matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 nome1='Player1'
 nome2='Player2'
-
+pygame.display.set_caption("Semáforo!")
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")
 pygame.mixer.music.set_volume(0.1)

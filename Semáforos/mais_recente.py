@@ -41,7 +41,7 @@ def desenha_tabuleiro(tela, matriz, nome1, nome2):
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_jogo.collidepoint(mouse_pos):
-                    guarda_nomes()
+                    guarda_nomes(nome1, nome2)
                     guarda_matriz(matriz)
                     main(matriz, nome1, nome2)
                 if area_regras_ingame.collidepoint(mouse_pos):

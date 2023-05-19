@@ -2,8 +2,38 @@ import pygame
 import pygame.mixer
 from pygame.locals import *
 from sys import exit
-
+import random
 pygame.init()
+
+def verifica_vitoria(matriz):
+    if matriz[0][0]==matriz[0][1] and matriz[0][1]==matriz[0][2]:
+        vitoria=True
+    elif matriz[0][1]==matriz[0][2] and matriz[0][2]==matriz[0][3]:
+        vitoria=True
+    elif matriz[1][0]==matriz[1][1] and matriz[1][1]==matriz[1][2]:
+        vitoria=True
+    elif matriz[1][1]==matriz[1][2] and matriz[1][2]==matriz[1][3]:
+        vitoria=True
+    elif matriz[2][0]==matriz[2][1] and matriz[2][1]==matriz[2][2]:
+        vitoria=True
+    elif matriz[2][1]==matriz[2][2] and matriz[2][2]==matriz[2][3]:
+        vitoria=True
+    elif matriz[0][0]==matriz[1][0] and matriz[1][0]==matriz[2][0]:
+        vitoria=True
+    elif matriz[0][1]==matriz[1][1] and matriz[1][1]==matriz[2][1]:
+        vitoria=True
+    elif matriz[0][2]==matriz[1][2] and matriz[1][2]==matriz[2][2]:
+        vitoria=True
+    elif matriz[0][3]==matriz[1][3] and matriz[1][3]==matriz[2][3]:
+        vitoria=True
+    elif matriz[0][0]==matriz[1][1] and matriz[1][1]==matriz[2][2]:
+        vitoria=True
+    elif matriz[0][1]==matriz[1][2] and matriz[1][2]==matriz[2][3]:
+        vitoria=True
+    elif matriz[0][3]==matriz[1][2] and matriz[1][2]==matriz[2][1]:
+        vitoria=True
+    elif matriz[0][2]==matriz[1][1] and matriz[1][1]==matriz[2][0]:
+        vitoria=True
 
 def carrega_nome():
     with open("nome.txt", "r") as ficheiro_nome:
@@ -32,9 +62,13 @@ def desenha_tabuleiro_singleplayer(tela, matriz, nome):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
-        fundo = pygame.image.load("jogo simples.png")
+        fundo = pygame.image.load("vez do jogador.png")
         tela.blit(fundo, (0,0))
         pygame.display.update()
+        #fazer random para ver quem comeca
+        #fazar ciclo para jogar um jogador e depois o outro
+        #a medida que troca de jogador troca o texto da vez
+        #a cada jogada verificar se ganhou
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -587,46 +621,112 @@ def area12_carregar(tela, matriz):
         pygame.display.update()
 
 def jogo_singleplayer(tela, matriz, nome):
+    jogadores=["jogador", "bot"]
+    jogada=random.choice(jogadores)
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                exit()
-            elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
-                x, y = pygame.mouse.get_pos()
-                mouse_pos=pygame.mouse.get_pos()
-                if x>487 and x<594 and y>279 and y<391:
-                    area1(tela, matriz)
-                if x>601 and x<708 and y>279 and y<391:
-                    area2(tela, matriz)
-                if x>715 and x<822 and y>279 and y<391:
-                    area3(tela, matriz)
-                if x>829 and x<936 and y>279 and y<391:
-                    area4(tela, matriz)
-                if x>487 and x<594 and y>397 and y<510:
-                    area5(tela, matriz)
-                if x>601 and x<708 and y>397 and y<510:
-                    area6(tela, matriz)
-                if x>715 and x<822 and y>397 and y<510:
-                    area7(tela, matriz)
-                if x>829 and x<936 and y>397 and y<510:
-                    area8(tela, matriz)
-                if x>487 and x<594 and y>515 and y<628:
-                    area9(tela, matriz)
-                if x>601 and x<708 and y>515 and y<628:
-                    area10(tela, matriz)
-                if x>715 and x<822 and y>515 and y<628:
-                    area11(tela, matriz)
-                if x>829 and x<936 and y>515 and y<628:
-                    area12(tela, matriz)
-                if area_sair_jogo.collidepoint(mouse_pos):
-                    guarda_matriz(matriz)
-                    main()
-                if area_regras_ingame.collidepoint(mouse_pos):
-                    menu_regras_ingame_singleplayer(tela, matriz, nome)
-                    guarda_matriz(matriz)
+        if jogada=="jogador":
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    x, y = pygame.mouse.get_pos()
+                    mouse_pos=pygame.mouse.get_pos()
+                    if x>487 and x<594 and y>279 and y<391:
+                        area1(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>601 and x<708 and y>279 and y<391:
+                        area2(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>715 and x<822 and y>279 and y<391:
+                        area3(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>829 and x<936 and y>279 and y<391:
+                        area4(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>487 and x<594 and y>397 and y<510:
+                        area5(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>601 and x<708 and y>397 and y<510:
+                        area6(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>715 and x<822 and y>397 and y<510:
+                        area7(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>829 and x<936 and y>397 and y<510:
+                        area8(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>487 and x<594 and y>515 and y<628:
+                        area9(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>601 and x<708 and y>515 and y<628:
+                        area10(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>715 and x<822 and y>515 and y<628:
+                        area11(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>829 and x<936 and y>515 and y<628:
+                        area12(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if area_sair_jogo.collidepoint(mouse_pos):
+                        guarda_matriz(matriz)
+                        main()
+                    if area_regras_ingame.collidepoint(mouse_pos):
+                        menu_regras_ingame_singleplayer(tela, matriz, nome)
+                        guarda_matriz(matriz)
+
+        elif jogada=="bot":
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    exit()
+                elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+                    x, y = pygame.mouse.get_pos()
+                    mouse_pos=pygame.mouse.get_pos()
+                    if x>487 and x<594 and y>279 and y<391:
+                        area1(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>601 and x<708 and y>279 and y<391:
+                        area2(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>715 and x<822 and y>279 and y<391:
+                        area3(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>829 and x<936 and y>279 and y<391:
+                        area4(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>487 and x<594 and y>397 and y<510:
+                        area5(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>601 and x<708 and y>397 and y<510:
+                        area6(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>715 and x<822 and y>397 and y<510:
+                        area7(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>829 and x<936 and y>397 and y<510:
+                        area8(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>487 and x<594 and y>515 and y<628:
+                        area9(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>601 and x<708 and y>515 and y<628:
+                        area10(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>715 and x<822 and y>515 and y<628:
+                        area11(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if x>829 and x<936 and y>515 and y<628:
+                        area12(tela, matriz)
+                        verifica_vitoria(matriz)
+                    if area_sair_jogo.collidepoint(mouse_pos):
+                        guarda_matriz(matriz)
+                        main()
+                    if area_regras_ingame.collidepoint(mouse_pos):
+                        menu_regras_ingame_singleplayer(tela, matriz, nome)
+                        guarda_matriz(matriz)
 
 def menu_regras_ingame_singleplayer(tela, matriz, nome):
     while True:

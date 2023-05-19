@@ -5,6 +5,16 @@ from sys import exit
 
 pygame.init()
 
+def guarda_tipo_de_jogo(tipo_de_jogo):
+    ficheiro_TipoDeJogo = open("tipodejogo.txt", "w")
+    ficheiro_TipoDeJogo.write(tipo_de_jogo)
+    ficheiro_TipoDeJogo.close()
+
+def carrega_tipo_de_jogo():
+    with open("tipodejogo.txt","r") as ficheiro_TipoDeJogo:
+        conteudo = ficheiro_TipoDeJogo.read()
+        tipo_de_jogo = conteudo
+    return tipo_de_jogo
 
 def carrega_nomes():
     with open("nomes.txt", "r") as ficheiro_nomes:
@@ -14,6 +24,7 @@ def carrega_nomes():
 
 def guarda_nomes(nome1, nome2):
     ficheiro_nomes = open("nomes.txt", "w")
+    ficheiro_nomes.write("")
     ficheiro_nomes.write(str(nome1) + " " + str(nome2))
     ficheiro_nomes.close()
 
@@ -25,10 +36,11 @@ def carrega_matriz():
 
 def guarda_matriz(matriz):
     ficheiro_matriz = open("matriz.txt", "w")
+    ficheiro_matriz.write("")
     ficheiro_matriz.write(str(matriz))
     ficheiro_matriz.close()
 
-def desenha_tabuleiro_singleplayer(tela, matriz, nome):
+def desenha_tabuleiro_singleplayer(tela, matriz, nome, tipo_de_jogo):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
@@ -44,6 +56,7 @@ def desenha_tabuleiro_singleplayer(tela, matriz, nome):
                 if area_sair_jogo.collidepoint(mouse_pos):
                     guarda_nomes(nome)
                     guarda_matriz(matriz)
+                    guarda_tipo_de_jogo(tipo_de_jogo)
                     main(matriz, nome)
                 if area_regras_ingame.collidepoint(mouse_pos):
                     menu_regras_ingame_singleplayer(tela, matriz, nome)
@@ -62,7 +75,7 @@ def desenha_tabuleiro_singleplayer(tela, matriz, nome):
                 area12_carregar(tela,matriz)
                 jogo_singleplayer(tela, matriz, nome)
 
-def desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2):
+def desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2, tipo_de_jogo):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
@@ -78,6 +91,7 @@ def desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2):
                 if area_sair_jogo.collidepoint(mouse_pos):
                     guarda_nomes(nome1, nome2)
                     guarda_matriz(matriz)
+                    guarda_tipo_de_jogo(tipo_de_jogo)
                     main(matriz, nome1, nome2)
                 if area_regras_ingame.collidepoint(mouse_pos):
                     menu_regras_ingame_multiplayer(tela, matriz, nome1, nome2)
@@ -96,7 +110,7 @@ def desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2):
                 area12_carregar(tela,matriz)
                 jogo_multiplayer(tela, matriz, nome1, nome2)
 
-def escolhaNome1(tela, matriz):
+def escolhaNome1(tela, matriz, tipo_de_jogo):
     fonte = pygame.font.Font(None, 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
@@ -110,7 +124,7 @@ def escolhaNome1(tela, matriz):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     nome1=user_text
-                    escolhaNome2(tela, matriz, nome1)
+                    escolhaNome2(tela, matriz, nome1, tipo_de_jogo)
                 elif event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 else:
@@ -125,7 +139,7 @@ def escolhaNome1(tela, matriz):
                 menu_tipoDeJogo(tela, matriz)
         pygame.display.update()
     
-def escolhaNome2(tela, matriz, nome1):
+def escolhaNome2(tela, matriz, nome1, tipo_de_jogo):
     fonte = pygame.font.Font(None, 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
@@ -139,7 +153,7 @@ def escolhaNome2(tela, matriz, nome1):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     nome2=user_text
-                    desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2)
+                    desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2, tipo_de_jogo)
                 elif event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 else:
@@ -154,7 +168,7 @@ def escolhaNome2(tela, matriz, nome1):
                 menu_tipoDeJogo(tela, matriz)
         pygame.display.update()
 
-def escolhaNome(tela, matriz):
+def escolhaNome(tela, matriz, tipo_de_jogo):
     fonte = pygame.font.Font(None, 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
@@ -168,7 +182,7 @@ def escolhaNome(tela, matriz):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     nome1=user_text
-                    desenha_tabuleiro_singleplayer(tela, matriz, nome1)
+                    desenha_tabuleiro_singleplayer(tela, matriz, nome1, tipo_de_jogo)
                 elif event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 else:
@@ -724,13 +738,17 @@ def jogo_multiplayer(tela, matriz, nome1, nome2):
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
-        fonte = pygame.font.Font(None, 36)
+        fonte = pygame.font.Font("arlrdbd.ttf", 36)
         vez_do_jogador=0
         if vez_do_jogador==0:
-            texto_surface = fonte.render("Vez do {nome1}", True, (255, 255, 255))
+            texto_surface = fonte.render("Vez de", True, (153,134,117))
+            texto_surface2 = fonte.render(nome1, True, (153,134,117))
         else:
-            texto_surface = fonte.render("Vez do {nome2}", True, (255,255,255))
-
+            texto_surface = fonte.render("Vez de", True, (153,134,117))
+            texto_surface2 = fonte.render(nome2, True, (153,134,117))
+        tela.blit(texto_surface, (170, 367))
+        tela.blit(texto_surface2, (175, 420))
+        pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -799,7 +817,7 @@ def menu_regras_ingame_singleplayer(tela, matriz, nome):
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_regras.collidepoint(mouse_pos):
                     carrega_matriz()
-                    desenha_tabuleiro_singleplayer(tela, matriz, nome)
+                    desenha_tabuleiro_singleplayer(tela, matriz, nome, tipo_de_jogo)
 
 def menu_regras(tela, matriz):
     while True:
@@ -833,9 +851,11 @@ def menu_tipoDeJogo(tela, matriz):
                 if area_sair_escolha_jogadores.collidepoint(mouse_pos):
                     main(matriz, nome1, nome2)
                 elif area_singleplayer.collidepoint(mouse_pos):
-                    escolhaNome(tela, matriz)
+                    tipo_de_jogo=1
+                    escolhaNome(tela, matriz, tipo_de_jogo)
                 elif area_multiplayer.collidepoint(mouse_pos):
-                    escolhaNome1(tela, matriz)
+                    tipo_de_jogo=2
+                    escolhaNome1(tela, matriz, tipo_de_jogo)
 
 def desenha_menu(tela, matriz):
     fundo = pygame.image.load("semaforo menu com peças.png")
@@ -876,7 +896,11 @@ def main(matriz, nome1, nome2):
                     print(nome1)
                     print(nome2)
                     carrega_matriz()
-                    desenha_tabuleiro(tela, matriz, nome1, nome2)
+                    carrega_tipo_de_jogo()
+                    if tipo_de_jogo==0:
+                        desenha_tabuleiro_singleplayer(tela, matriz, nome1)
+                    elif tipo_de_jogo==1:
+                        desenha_tabuleiro_multiplayer(tela, matriz, nome1, nome2)
                 elif area_regras.collidepoint(mouse_pos):
                     menu_regras(tela, matriz)
                 elif area_sair.collidepoint(mouse_pos):
@@ -896,8 +920,10 @@ def main(matriz, nome1, nome2):
             pygame.display.update()      
 
 matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-nome1='Player1'
-nome2='Player2'
+nome1=''
+nome2=''
+tipo_de_jogo=''
+guarda_tipo_de_jogo(tipo_de_jogo)
 
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")

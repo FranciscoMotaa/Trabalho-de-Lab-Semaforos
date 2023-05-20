@@ -36,6 +36,14 @@ def verifica_vitoria(matriz):
     elif matriz[0][2]==matriz[1][1] and matriz[1][1]==matriz[2][0]:
         vitoria=True
 
+def posicoes_disponiveis(matriz):
+    posicoes_disponiveis = []
+    for i in range(3):
+        for j in range(4):
+            if matriz[i][j] == "":
+                posicoes_disponiveis.append((i, j))
+    return posicoes_disponiveis
+
 def carrega_nome():
     with open("nome.txt", "r") as ficheiro_nome:
         conteudo = ficheiro_nome.read()
@@ -688,7 +696,7 @@ def jogo_singleplayer(tela, matriz, nome):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+                """ elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                     x, y = pygame.mouse.get_pos()
                     mouse_pos=pygame.mouse.get_pos()
                     if x>487 and x<594 and y>279 and y<391:
@@ -734,7 +742,17 @@ def jogo_singleplayer(tela, matriz, nome):
                     if area_regras_ingame.collidepoint(mouse_pos):
                         som_click(tela)
                         menu_regras_ingame_singleplayer(tela, matriz, nome)
-                        guarda_matriz(matriz)
+                        guarda_matriz(matriz) """
+
+                posicoes_disponiveis = posicoes_disponiveis(matriz)
+                if posicoes_disponiveis:
+                    posicao = random.choice(posicoes_disponiveis)
+                    i, j = posicao
+                    # Realize a jogada do bot na posição (i, j) desejada
+                    matriz[i][j] = 0  # Substitua "amarelo" pela cor desejada
+                else:
+                    return False
+                    # Tratamento quando não há posições disponíveis
 
 def menu_regras_ingame_singleplayer(tela, matriz, nome):
     while True:
@@ -795,9 +813,6 @@ def main():
     botaocontinuarjogo = pygame.image.load("continuar jogo.png")
     botaoregras = pygame.image.load("regras botao.png")
     botaosair = pygame.image.load("sair botao.png")
-
-    #click_sound= pygame.mixer.Sound("Mouse_Click_3-fesliyanstudios.com.mp3")
-    #click_sound.set_volume(0.4)
 
     while True:
         desenha_menu(tela)

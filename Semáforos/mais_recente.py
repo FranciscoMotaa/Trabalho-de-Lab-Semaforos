@@ -40,7 +40,7 @@ def posicoes_disponiveis(matriz):
     posicoes_disponiveis = []
     for i in range(3):
         for j in range(4):
-            if matriz[i][j] == "":
+            if matriz[i][j] == 0:
                 posicoes_disponiveis.append((i, j))
     return posicoes_disponiveis
 
@@ -696,7 +696,7 @@ def jogo_singleplayer(tela, matriz, nome):
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                """ elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
+                elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                     x, y = pygame.mouse.get_pos()
                     mouse_pos=pygame.mouse.get_pos()
                     if x>487 and x<594 and y>279 and y<391:
@@ -742,9 +742,9 @@ def jogo_singleplayer(tela, matriz, nome):
                     if area_regras_ingame.collidepoint(mouse_pos):
                         som_click(tela)
                         menu_regras_ingame_singleplayer(tela, matriz, nome)
-                        guarda_matriz(matriz) """
+                        guarda_matriz(matriz) 
 
-                posicoes_disponiveis = posicoes_disponiveis(matriz)
+                """ posicoes_disponiveis = posicoes_disponiveis(matriz)
                 if posicoes_disponiveis:
                     posicao = random.choice(posicoes_disponiveis)
                     i, j = posicao
@@ -753,7 +753,7 @@ def jogo_singleplayer(tela, matriz, nome):
                 else:
                     return False
                     # Tratamento quando não há posições disponíveis
-
+ """
 def menu_regras_ingame_singleplayer(tela, matriz, nome):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)

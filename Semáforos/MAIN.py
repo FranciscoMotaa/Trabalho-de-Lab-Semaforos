@@ -5,36 +5,56 @@ from sys import exit
 import random
 pygame.init()
 
+def verifica_vitoria(tela, matriz, nome):
+    vitoria=False
+    if matriz[0][0]==matriz[0][1] and matriz[0][1]==matriz[0][2] and matriz[0][2]!=0:
+        vitoria=True
+    elif matriz[0][1]==matriz[0][2] and matriz[0][2]==matriz[0][3] and matriz[0][3]!=0:
+        vitoria=True
+    elif matriz[1][0]==matriz[1][1] and matriz[1][1]==matriz[1][2] and matriz[1][2]!=0:
+        vitoria=True
+    elif matriz[1][1]==matriz[1][2] and matriz[1][2]==matriz[1][3] and matriz[1][3]!=0:
+        vitoria=True
+    elif matriz[2][0]==matriz[2][1] and matriz[2][1]==matriz[2][2] and matriz[2][2]!=0:
+        vitoria=True
+    elif matriz[2][1]==matriz[2][2] and matriz[2][2]==matriz[2][3] and matriz[2][3]!=0:
+        vitoria=True
+    elif matriz[0][0]==matriz[1][0] and matriz[1][0]==matriz[2][0] and matriz[2][0]!=0:
+        vitoria=True
+    elif matriz[0][1]==matriz[1][1] and matriz[1][1]==matriz[2][1] and matriz[2][1]!=0:
+        vitoria=True
+    elif matriz[0][2]==matriz[1][2] and matriz[1][2]==matriz[2][2] and matriz[2][2]!=0:
+        vitoria=True
+    elif matriz[0][3]==matriz[1][3] and matriz[1][3]==matriz[2][3] and matriz[2][3]!=0:
+        vitoria=True
+    elif matriz[0][0]==matriz[1][1] and matriz[1][1]==matriz[2][2] and matriz[2][2]!=0:
+        vitoria=True
+    elif matriz[0][1]==matriz[1][2] and matriz[1][2]==matriz[2][3] and matriz[2][3]!=0:
+        vitoria=True
+    elif matriz[0][3]==matriz[1][2] and matriz[1][2]==matriz[2][1] and matriz[2][1]!=0:
+        vitoria=True
+    elif matriz[0][2]==matriz[1][1] and matriz[1][1]==matriz[2][0] and matriz[2][0]!=0:
+        vitoria=True
 
-def verifica_vitoria(matriz):
-    if matriz[0][0]==matriz[0][1] and matriz[0][1]==matriz[0][2]:
-        vitoria=True
-    elif matriz[0][1]==matriz[0][2] and matriz[0][2]==matriz[0][3]:
-        vitoria=True
-    elif matriz[1][0]==matriz[1][1] and matriz[1][1]==matriz[1][2]:
-        vitoria=True
-    elif matriz[1][1]==matriz[1][2] and matriz[1][2]==matriz[1][3]:
-        vitoria=True
-    elif matriz[2][0]==matriz[2][1] and matriz[2][1]==matriz[2][2]:
-        vitoria=True
-    elif matriz[2][1]==matriz[2][2] and matriz[2][2]==matriz[2][3]:
-        vitoria=True
-    elif matriz[0][0]==matriz[1][0] and matriz[1][0]==matriz[2][0]:
-        vitoria=True
-    elif matriz[0][1]==matriz[1][1] and matriz[1][1]==matriz[2][1]:
-        vitoria=True
-    elif matriz[0][2]==matriz[1][2] and matriz[1][2]==matriz[2][2]:
-        vitoria=True
-    elif matriz[0][3]==matriz[1][3] and matriz[1][3]==matriz[2][3]:
-        vitoria=True
-    elif matriz[0][0]==matriz[1][1] and matriz[1][1]==matriz[2][2]:
-        vitoria=True
-    elif matriz[0][1]==matriz[1][2] and matriz[1][2]==matriz[2][3]:
-        vitoria=True
-    elif matriz[0][3]==matriz[1][2] and matriz[1][2]==matriz[2][1]:
-        vitoria=True
-    elif matriz[0][2]==matriz[1][1] and matriz[1][1]==matriz[2][0]:
-        vitoria=True
+    if vitoria==True:
+        while True:
+            area_sair = pygame.Rect(13, 665, 100, 100)
+            fundo = pygame.image.load("VENCEDOR.png")
+            tela.blit(fundo, (0,0))
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    pygame.quit()
+                    guarda_nome(nome)
+                    guarda_matriz(matriz)
+                    exit()
+                elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                    mouse_pos=pygame.mouse.get_pos()
+                    if area_sair.collidepoint(mouse_pos):
+                        som_click(tela)
+                        guarda_nome(nome)
+                        guarda_matriz(matriz)
+                        main()
 
 def posicoes_disponiveis(matriz):
     posicoes_disponiveis = []
@@ -52,7 +72,7 @@ def carrega_nome():
 
 def guarda_nome(nome):
     ficheiro_nome = open("nome.txt", "w")
-    ficheiro_nome.write(nome)
+    ficheiro_nome.write(str(nome))
     ficheiro_nome.close()
 
 def carrega_matriz():
@@ -81,6 +101,8 @@ def desenha_tabuleiro_singleplayer(tela, matriz, nome):
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
+                guarda_nome(nome)
+                guarda_matriz(matriz)
                 exit()
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
@@ -105,6 +127,7 @@ def desenha_tabuleiro_singleplayer(tela, matriz, nome):
                 area10_carregar(tela,matriz)
                 area11_carregar(tela,matriz)
                 area12_carregar(tela,matriz)
+                verifica_vitoria(tela, matriz, nome)
                 jogo_singleplayer(tela, matriz, nome)
 
 def escolhaNome(tela, matriz):
@@ -648,40 +671,40 @@ def jogo_singleplayer(tela, matriz, nome):
                     mouse_pos=pygame.mouse.get_pos()
                     if x>487 and x<594 and y>279 and y<391:
                         area1(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>601 and x<708 and y>279 and y<391:
                         area2(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>715 and x<822 and y>279 and y<391:
                         area3(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>829 and x<936 and y>279 and y<391:
                         area4(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>487 and x<594 and y>397 and y<510:
                         area5(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>601 and x<708 and y>397 and y<510:
                         area6(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>715 and x<822 and y>397 and y<510:
                         area7(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>829 and x<936 and y>397 and y<510:
                         area8(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>487 and x<594 and y>515 and y<628:
                         area9(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>601 and x<708 and y>515 and y<628:
                         area10(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>715 and x<822 and y>515 and y<628:
                         area11(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>829 and x<936 and y>515 and y<628:
                         area12(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if area_sair_jogo.collidepoint(mouse_pos):
                         som_click(tela)
                         guarda_matriz(matriz)
@@ -701,40 +724,40 @@ def jogo_singleplayer(tela, matriz, nome):
                     mouse_pos=pygame.mouse.get_pos()
                     if x>487 and x<594 and y>279 and y<391:
                         area1(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>601 and x<708 and y>279 and y<391:
                         area2(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>715 and x<822 and y>279 and y<391:
                         area3(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>829 and x<936 and y>279 and y<391:
                         area4(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>487 and x<594 and y>397 and y<510:
                         area5(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>601 and x<708 and y>397 and y<510:
                         area6(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>715 and x<822 and y>397 and y<510:
                         area7(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>829 and x<936 and y>397 and y<510:
                         area8(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>487 and x<594 and y>515 and y<628:
                         area9(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>601 and x<708 and y>515 and y<628:
                         area10(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>715 and x<822 and y>515 and y<628:
                         area11(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if x>829 and x<936 and y>515 and y<628:
                         area12(tela, matriz)
-                        verifica_vitoria(matriz)
+                        verifica_vitoria(tela, matriz, nome)
                     if area_sair_jogo.collidepoint(mouse_pos):
                         som_click(tela)
                         guarda_matriz(matriz)

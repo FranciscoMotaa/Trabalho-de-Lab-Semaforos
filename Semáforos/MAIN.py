@@ -151,7 +151,7 @@ def escolhaNome(tela, matriz):
                     user_text += event.unicode     
         tela.blit(fundo, (0,0))
         text_surface = fonte.render(user_text, True, (0, 0, 0)) 
-        tela.blit(text_surface, (input_rect.x + 130, input_rect.y + 30))
+        tela.blit(text_surface, (input_rect.x + 134, input_rect.y + 30))
         input_rect.w = max(435, text_surface.get_width() + 10)
         pygame.display.update()
         if area_sair_escolhaNomes.collidepoint(pygame.mouse.get_pos()):
@@ -820,6 +820,7 @@ def som_click(tela):
     click_sound= pygame.mixer.Sound("Mouse_Click_3-fesliyanstudios.com.mp3")
     click_sound.set_volume(0.4)
     click_sound.play()
+    pygame.time.delay(250)
 
 def main():
     largura=1366

@@ -675,7 +675,7 @@ def desenha_tabuleiro_singleplayer(tela, matriz):
                 area10_carregar(tela,matriz)
                 area11_carregar(tela,matriz)
                 area12_carregar(tela,matriz)
-                verifica_vitoria(tela, matriz)
+                #verifica_vitoria(tela, matriz)
                 jogo_singleplayer(tela, matriz)
 
 def turno_ia(matriz):

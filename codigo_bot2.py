@@ -38,6 +38,7 @@ def verifica_vitoria(tela, matriz):
     elif matriz[0][2]==matriz[1][1] and matriz[1][1]==matriz[2][0] and matriz[2][0]!=0:
         vitoria=True
 
+    #print(verifica_vitoria)
     if vitoria==True:
         while True:
             area_sair = pygame.Rect(13, 665, 100, 100)
@@ -48,6 +49,7 @@ def verifica_vitoria(tela, matriz):
                 if event.type == QUIT:
                     pygame.quit()
                     exit()
+            
 
 def jogo_singleplayer(tela, matriz):
     jogadores=["jogador", "bot"]
@@ -63,92 +65,58 @@ def jogo_singleplayer(tela, matriz):
                 elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                     x, y = pygame.mouse.get_pos()
                     mouse_pos=pygame.mouse.get_pos()
-                    if x>487 and x<594 and y>279 and y<391:
-                        area1(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>601 and x<708 and y>279 and y<391:
-                        area2(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>715 and x<822 and y>279 and y<391:
-                        area3(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>829 and x<936 and y>279 and y<391:
-                        area4(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>487 and x<594 and y>397 and y<510:
-                        area5(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>601 and x<708 and y>397 and y<510:
-                        area6(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>715 and x<822 and y>397 and y<510:
-                        area7(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>829 and x<936 and y>397 and y<510:
-                        area8(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>487 and x<594 and y>515 and y<628:
-                        area9(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>601 and x<708 and y>515 and y<628:
-                        area10(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>715 and x<822 and y>515 and y<628:
-                        area11(tela, matriz)
-                        verifica_vitoria(tela, matriz)
-                    if x>829 and x<936 and y>515 and y<628:
-                        area12(tela, matriz)
-                        verifica_vitoria(tela, matriz)
+                    posicoe_tabuleir(tela, matriz, x, y)
+                ai.update()
             jogada = "bot"
         elif jogada=="bot":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                """ elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    x, y = pygame.mouse.get_pos()
-                    mouse_pos=pygame.mouse.get_pos()
-                    if x>487 and x<594 and y>279 and y<391:
+                turno_ia(matriz)
+                ai.render()
+            jogada = "jogador"
+            ai.update()
+            verifica_vitoria(tela,matriz)
+        print(verifica_vitoria)
+
+def posicoe_tabuleir(tela, matriz, x, y):
+    if x>487 and x<594 and y>279 and y<391:
                         area1(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>601 and x<708 and y>279 and y<391:
+    if x>601 and x<708 and y>279 and y<391:
                         area2(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>715 and x<822 and y>279 and y<391:
+    if x>715 and x<822 and y>279 and y<391:
                         area3(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>829 and x<936 and y>279 and y<391:
+    if x>829 and x<936 and y>279 and y<391:
                         area4(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>487 and x<594 and y>397 and y<510:
+    if x>487 and x<594 and y>397 and y<510:
                         area5(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>601 and x<708 and y>397 and y<510:
+    if x>601 and x<708 and y>397 and y<510:
                         area6(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>715 and x<822 and y>397 and y<510:
+    if x>715 and x<822 and y>397 and y<510:
                         area7(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>829 and x<936 and y>397 and y<510:
+    if x>829 and x<936 and y>397 and y<510:
                         area8(tela, matriz)
-                        verifica_vitoria(tela, matriz,)
-                    if x>487 and x<594 and y>515 and y<628:
+                        verifica_vitoria(tela, matriz)
+    if x>487 and x<594 and y>515 and y<628:
                         area9(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>601 and x<708 and y>515 and y<628:
+    if x>601 and x<708 and y>515 and y<628:
                         area10(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>715 and x<822 and y>515 and y<628:
+    if x>715 and x<822 and y>515 and y<628:
                         area11(tela, matriz)
                         verifica_vitoria(tela, matriz)
-                    if x>829 and x<936 and y>515 and y<628:
+    if x>829 and x<936 and y>515 and y<628:
                         area12(tela, matriz)
-                        verifica_vitoria(tela, matriz) """
-                turno_ia(matriz)
-                ai.update()
-                ai.render()
-                verifica_vitoria(tela,matriz)
-            jogada = "jogador"      
+                        verifica_vitoria(tela, matriz)
 def area1(tela, matriz):
     if matriz[0][0]==0:
         circulo=pygame.image.load("bola.png")
@@ -686,13 +654,16 @@ def turno_ia(matriz):
                 casas_disponiveis.append((i,j)) 
                             
     if casas_disponiveis:
-            i, j = random.choice(casas_disponiveis)
-            if matriz[i][j] == 0:
-                matriz[i][j] = 1
-            elif matriz[i][j] == 1:
-                matriz[i][j] = 2
-            elif matriz[i][j] == 2:
-                matriz[i][j] = 3
+        i, j = random.choice(casas_disponiveis)
+        if matriz[i][j] == 0:
+            matriz[i][j] = 1
+        elif matriz[i][j] == 1:
+            matriz[i][j] = 2
+        elif matriz[i][j] == 2:
+            matriz[i][j] = 3 
+
+    print(matriz)
+    
 
 class AI:
     def __init__(self, tela):
@@ -705,8 +676,7 @@ class AI:
         self.tela = tela
         self.matriz = [[0,0,0,0],[0,0,0,0],[0,0,0,0]]
         self.current_position = self.get_random_position_tabule(self)
-        matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-    
+        
     def get_random_position_matriz(self):
         matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
         return random.choice(matriz)

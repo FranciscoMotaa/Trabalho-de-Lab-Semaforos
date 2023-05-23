@@ -14,6 +14,7 @@ class AI:
         self.speed = 6
         self.image = pygame.image.load("bola.png") 
         self.image2 = pygame.image.load("quadrado.png")
+        #matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
     def update(self):
         botao_00 = pygame.Rect(490, 282, 110, 110)
@@ -29,11 +30,10 @@ class AI:
         botao_22 = pygame.Rect(718, 518, 110, 110)
         botao_23 = pygame.Rect(831, 518, 110, 110)
         
-
         posicoes = [botao_00, botao_01, botao_02, botao_03, botao_10, botao_11, botao_12, botao_13, botao_20, botao_21, botao_22, botao_23]
-        x = random.choice(posicoes).center
+        x = random.choice(posicoes)
         screen.blit(self.image, (x[0] - self.image.get_width() // 2, x[1] - self.image.get_height() // 2))
-        screen.blit(self.image2, (x[0] - self.image.get_width() // 2, x[1] - self.image.get_height() // 2))
+        screen.blit(self.image2, (x[0] - self.image2.get_width() // 2, x[1] - self.image2.get_height() // 2))
         #pygame.draw.circle(screen, (0,255,0), x, 20)
 
     def render(self):
@@ -59,6 +59,7 @@ while running:
 
 pygame.quit()
 
+#matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
 
 
 

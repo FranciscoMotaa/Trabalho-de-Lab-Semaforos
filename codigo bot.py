@@ -1,5 +1,4 @@
 import random 
-
 def bot_jogador(matriz):
     legal_moves = matriz.legal_moves
     for i in range(3):

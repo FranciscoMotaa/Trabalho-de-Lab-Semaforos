@@ -50,11 +50,24 @@ def verifica_vitoria(tela, matriz):
                     pygame.quit()
                     exit()
             
-
+def tela_jogador(tela,jogada):
+    fonte = pygame.font.SysFont("arlrdbd.ttf", 40, True, True)
+    if jogada == "jogador":
+        mensagem = f'É a vez de jogador' #isto vai ter que se alterar para a variavel do nome do men depois 
+        texto_formatado = fonte.render(mensagem, True, (255, 0, 0))
+        tela.blit(texto_formatado, (100, 397))
+        pygame.display.update()
+    elif jogada == "bot":
+        mensagem = f'É a vez do Zé' 
+        texto_formatado = fonte.render(mensagem, True, (0, 255, 0))
+        tela.blit(texto_formatado, (149, 397))
+        pygame.display.update()
+    
 def jogo_singleplayer(tela, matriz):
     #sorteio para ver quem começa a jogar
     jogadores=["jogador", "bot"]
     jogada=random.choice(jogadores)
+    tela_jogador(tela, jogada)
     print(jogada)
     vez_jogador = False
     while True:

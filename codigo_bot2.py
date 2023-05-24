@@ -38,7 +38,7 @@ def verifica_vitoria(tela, matriz):
     elif matriz[0][2]==matriz[1][1] and matriz[1][1]==matriz[2][0] and matriz[2][0]!=0:
         vitoria=True
 
-    #print(verifica_vitoria)
+    print(vitoria)
     if vitoria==True:
         while True:
             area_sair = pygame.Rect(13, 665, 100, 100)
@@ -52,11 +52,15 @@ def verifica_vitoria(tela, matriz):
             
 
 def jogo_singleplayer(tela, matriz):
+    #sorteio para ver quem começa a jogar
     jogadores=["jogador", "bot"]
     jogada=random.choice(jogadores)
+    print(jogada)
+    vez_jogador = False
     while True:
         area_sair_jogo = pygame.Rect(13,665,100,100)
         area_regras_ingame = pygame.Rect(113,665,100,100)
+        #se o sorteodo for o jogador começa o jogador e depois passa para o bot 
         if jogada=="jogador":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -65,21 +69,24 @@ def jogo_singleplayer(tela, matriz):
                 elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                     x, y = pygame.mouse.get_pos()
                     mouse_pos=pygame.mouse.get_pos()
-                    posicoe_tabuleir(tela, matriz, x, y)
+                    if vez_jogador:
+                        posicoe_tabuleir(tela, matriz, x, y)
+                        vez_jogador = False
                 ai.update()
             jogada = "bot"
+        #se o sorteado for o bot faz isto 
         elif jogada=="bot":
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
                 turno_ia(matriz)
-                ai.render()
+                vez_jogador = True
+                #ai.render()
             jogada = "jogador"
             ai.update()
             verifica_vitoria(tela,matriz)
-        print(verifica_vitoria)
-
+        
 def posicoe_tabuleir(tela, matriz, x, y):
     if x>487 and x<594 and y>279 and y<391:
                         area1(tela, matriz)
@@ -647,23 +654,54 @@ def desenha_tabuleiro_singleplayer(tela, matriz):
                 jogo_singleplayer(tela, matriz)
 
 def turno_ia(matriz):
+    #ve quais são as casas disponiveis 
     casas_disponiveis = []
+    #percorre a matriz do jogo e se aquela posição tiver a zeros adiciona á lista de casas_disponiveis 
     for i in range(len(matriz)):
         for j in range(len(matriz[i])):
             if matriz[i][j] == 0:
                 casas_disponiveis.append((i,j)) 
-                            
+    #se condição para ler o tabuleiro e colocar lá as peças na matriz                         
     if casas_disponiveis:
         i, j = random.choice(casas_disponiveis)
         if matriz[i][j] == 0:
             matriz[i][j] = 1
+            realizar_acao_interface(matriz, i, j, tela)
         elif matriz[i][j] == 1:
             matriz[i][j] = 2
+            realizar_acao_interface(matriz, i, j, tela)
         elif matriz[i][j] == 2:
-            matriz[i][j] = 3 
+            matriz[i][j] = 3
+            realizar_acao_interface(matriz, i, j, tela) 
 
-    print(matriz)
+        print(matriz)
     
+def realizar_acao_interface(matriz, i, j, tela):
+    valor = matriz[i][j]
+    #fazer load das imagens 
+    bola = pygame.image.load("bola.png")
+    triangulo = pygame.image.load("triangulo.png")
+    quadrado = pygame.image.load("quadrado.png")
+
+    coordenadas = [
+        (490, 282), (603, 282), (718, 282), (831, 282),
+        (490, 400), (603, 400), (718, 400), (831, 400),
+        (490, 518), (603, 518), (718, 518), (831, 518)
+    ]
+    x, y = coordenadas[i + j]
+
+    if valor == 1:
+        tela.blit(bola,(x,y))
+        pygame.display.update()
+    elif valor == 2:
+        tela.blit(triangulo,(x,y))
+        pygame.display.update()
+    elif valor == 3:
+       tela.blit(quadrado, (x,y))
+       pygame.display.update() 
+        
+
+
 
 class AI:
     def __init__(self, tela):
@@ -700,6 +738,7 @@ class AI:
             if event.type == QUIT:
                 pygame.quit()
                 exit()
+            pygame.display.update()
 
     def render(self):
         x, y = self.current_position
@@ -711,23 +750,15 @@ class AI:
 ai = AI(tela)
 
 
-
-#tabuleiro = pygame.image.load("vez do jogador.png")
+#o codigo começa aqui 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
     matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-
-    #tela.blit(tabuleiro, (0,0))
+    #matriz=[[1,1,1,1],[1,1,1,1],[1,1,1,1]]
     desenha_tabuleiro_singleplayer(tela, matriz)
     ai.update()
-    ai.render()
+    #ai.render()
     pygame.display.update()
     clock.tick(50)
-
-matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-
-ai.update()
-ai.render()
-

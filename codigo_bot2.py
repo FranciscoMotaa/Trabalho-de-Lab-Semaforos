@@ -58,7 +58,7 @@ def tela_jogador(tela,jogada):
         tela.blit(texto_formatado, (100, 397))
         pygame.display.update()
     elif jogada == "bot":
-        mensagem = f'É a vez do Zé' 
+        mensagem = f'É a vez do bot' 
         texto_formatado = fonte.render(mensagem, True, (0, 255, 0))
         tela.blit(texto_formatado, (149, 397))
         pygame.display.update()

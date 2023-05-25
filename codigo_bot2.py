@@ -674,19 +674,20 @@ def turno_ia(matriz):
         for j in range(len(matriz[i])):
             if matriz[i][j] == 0:
                 casas_disponiveis.append((i,j)) 
-    #se condição para ler o tabuleiro e colocar lá as peças na matriz                         
+    #condição para ler o tabuleiro e colocar lá as peças na matriz                         
     if casas_disponiveis:
         i, j = random.choice(casas_disponiveis)
-        if matriz[i][j] == 0:
+        """ if matriz[i][j] == 0:
             matriz[i][j] = 1
             realizar_acao_interface(matriz, i, j, tela)
         elif matriz[i][j] == 1:
             matriz[i][j] = 2
             realizar_acao_interface(matriz, i, j, tela)
         elif matriz[i][j] == 2:
-            matriz[i][j] = 3
-            realizar_acao_interface(matriz, i, j, tela) 
-
+            matriz[i][j] = 3 """
+            #realizar_acao_interface(matriz, i, j, tela) 
+        posicoe_tabuleir(matriz, casas_disponiveis, i, j)
+        #realizar_acao_interface(matriz, i, j, tela) 
         print(matriz)
     
 def realizar_acao_interface(matriz, i, j, tela):

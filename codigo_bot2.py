@@ -67,6 +67,7 @@ def jogo_singleplayer(tela, matriz):
     #sorteio para ver quem começa a jogar
     jogadores=["jogador", "bot"]
     jogada=random.choice(jogadores)
+    #faz aparcer na tela quem é que vai jogar 
     tela_jogador(tela, jogada)
     print(jogada)
     vez_jogador = False
@@ -82,10 +83,11 @@ def jogo_singleplayer(tela, matriz):
                 elif event.type==pygame.MOUSEBUTTONDOWN and event.button == 1:
                     x, y = pygame.mouse.get_pos()
                     mouse_pos=pygame.mouse.get_pos()
-                    if vez_jogador:
-                        posicoe_tabuleir(tela, matriz, x, y)
-                        vez_jogador = False
+                    if vez_jogador == True:
+                        posicoe_tabuleir(tela, matriz, x, y)          
+                vez_jogador = False
                 ai.update()
+                tela_jogador(jogada)  
             jogada = "bot"
         #se o sorteado for o bot faz isto 
         elif jogada=="bot":
@@ -99,6 +101,7 @@ def jogo_singleplayer(tela, matriz):
             jogada = "jogador"
             ai.update()
             verifica_vitoria(tela,matriz)
+            tela_jogador(jogada)  
         
 def posicoe_tabuleir(tela, matriz, x, y):
     if x>487 and x<594 and y>279 and y<391:
@@ -714,8 +717,6 @@ def realizar_acao_interface(matriz, i, j, tela):
        tela.blit(quadrado, (x,y))
        pygame.display.update() 
         
-
-
 
 class AI:
     def __init__(self, tela):

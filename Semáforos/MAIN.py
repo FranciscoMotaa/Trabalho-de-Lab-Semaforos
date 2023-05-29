@@ -880,9 +880,6 @@ def main():
             tela.blit(botaosair,(162,597))
             pygame.display.update()      
 
-matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
-nome1='Player1'
-
 pygame.display.set_caption("Semáforo!")
 pygame.mixer.init()
 pygame.mixer.music.load("Magical Sound Shower.mp3")

@@ -5,7 +5,10 @@ from sys import exit
 import random
 pygame.init()
 
-def verifica_vitoria(tela, matriz, nome):
+global ultimoTurno
+ultimoTurno = None
+
+def verifica_vitoria(tela, matriz, nome, gt="single", nomes=(None, None), ult=""):
     vitoria=False
     if matriz[0][0]==matriz[0][1] and matriz[0][1]==matriz[0][2] and matriz[0][2]!=0:
         vitoria=True
@@ -40,8 +43,22 @@ def verifica_vitoria(tela, matriz, nome):
         while True:
             area_sair = pygame.Rect(13, 665, 100, 100)
             fundo = pygame.image.load("VENCEDOR.png")
+
             pygame.time.delay(400)
             tela.blit(fundo, (0,0))
+
+            fonte = pygame.font.Font("arlrdbd.ttf", 50)
+            mensagem = ""
+            if gt=="single":
+                mensagem = nome
+            else:
+                print(nomes)
+                print(ult)
+                for n in nomes:
+                    if n == ult:
+                        mensagem = n
+            texto_formatado = fonte.render(mensagem, True, (0,0,0))
+            tela.blit(texto_formatado, (100, 372))
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -125,7 +142,7 @@ def desenha_tabuleiro_singleplayer(tela, matriz, nome):
                 jogo_singleplayer(tela, matriz, nome)
 
 def escolhaNome(tela, matriz):
-    fonte = pygame.font.Font(None, 50)
+    fonte = pygame.font.Font("arlrdbd.ttf", 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
     user_text = ''
@@ -155,7 +172,7 @@ def escolhaNome(tela, matriz):
         pygame.display.update()
 
 def escolhaTipoDeJogo(tela, matriz):
-    fonte = pygame.font.Font(None, 50)
+    fonte = pygame.font.Font("arlrdbd.ttf", 50)
     single_botao = pygame.Rect(334, 449, 339, 86)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
     multiplayer_botao = pygame.Rect(735, 450, 339, 86)
@@ -200,7 +217,7 @@ def nome_multiplayer(tela,matriz):
                     nome1_multiplayer(tela, matriz)
 
 def nome1_multiplayer(tela, matriz):
-    fonte = pygame.font.Font(None, 50)
+    fonte = pygame.font.Font("arlrdbd.ttf", 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
     user_text = ''
@@ -230,7 +247,8 @@ def nome1_multiplayer(tela, matriz):
         pygame.display.update()
     
 def nome2_multiplayer(tela,matriz, nome1):
-    fonte = pygame.font.Font(None, 50)
+    global ultimoTurno
+    fonte = pygame.font.Font("arlrdbd.ttf", 50)
     input_rect = pygame.Rect(470, 470, 435, 100)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
     user_text = ''
@@ -244,8 +262,11 @@ def nome2_multiplayer(tela,matriz, nome1):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     nome2=user_text #alterar esta variavel depois 
+                    jogada=random.choice([nome1, nome2])
                     while True:
-                        multiplayer_jogo(tela, matriz, nome1, nome2)
+                        jogada = incVez(jogada, nome1, nome2)
+                        multiplayer_jogo(tela, matriz, nome1, nome2, jogada)
+
                 elif event.key == pygame.K_BACKSPACE:
                     user_text = user_text[:-1]
                 else:
@@ -260,23 +281,41 @@ def nome2_multiplayer(tela,matriz, nome1):
                 escolhaTipoDeJogo(tela, matriz)
         pygame.display.update()
 
-def multiplayer_jogo(tela, matriz, nome1, nome2, running=True):
+def incVez(jogada, nome1, nome2):
+    if jogada == nome1:
+            jogada = nome2
+    else: 
+        jogada = nome1
+    return jogada
+
+def multiplayer_jogo(tela, matriz, nome1, nome2, jogada, running=True):
+    print(jogada)
+    jogadores = (nome1, nome2)
     fundo = pygame.image.load("vez do jogador.png")
-    tela.blit(fundo, (0,0))
-    jogadores=[nome1, nome2]
-    jogada=random.choice(jogadores)
-    
-    fonte = pygame.font.SysFont("arlrdbd.ttf", 40, True, True)
+    tela.blit(fundo, (0,0))    
+    fonte = pygame.font.Font("arlrdbd.ttf", 50)
     mensagem = f'É a vez de' #isto vai ter que se alterar para a variavel do nome do men depois 
     if jogada == nome1:
-        cor = (255,0,0)
+        cor = (170,154,134)
     else:
-        cor = (0,255,0)
+        cor = (170,154,134)
     texto_formatado = fonte.render(mensagem, True, cor)
     mensagem_nome = f'{jogada}'
     texto_formatado1 = fonte.render(mensagem_nome, True, cor)
-    tela.blit(texto_formatado, (100, 372))
-    tela.blit(texto_formatado1, (150, 430))
+    tela.blit(texto_formatado, (100, 360))
+    tela.blit(texto_formatado1, (150, 420))
+    area1_carregar(tela,matriz)
+    area2_carregar(tela,matriz)
+    area3_carregar(tela,matriz)
+    area4_carregar(tela,matriz)
+    area5_carregar(tela,matriz)
+    area6_carregar(tela,matriz)
+    area7_carregar(tela,matriz)
+    area8_carregar(tela,matriz)
+    area9_carregar(tela,matriz)
+    area10_carregar(tela,matriz)
+    area11_carregar(tela,matriz)
+    area12_carregar(tela,matriz)
 
     while running:
         area_sair_jogo = pygame.Rect(13,665,100,100)
@@ -291,41 +330,40 @@ def multiplayer_jogo(tela, matriz, nome1, nome2, running=True):
                     mouse_pos=pygame.mouse.get_pos()
                     if x>487 and x<594 and y>279 and y<391:
                         area1(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
-
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>601 and x<708 and y>279 and y<391:
                         area2(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>715 and x<822 and y>279 and y<391:
                         area3(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>829 and x<936 and y>279 and y<391:
                         area4(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>487 and x<594 and y>397 and y<510:
                         area5(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>601 and x<708 and y>397 and y<510:
                         area6(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>715 and x<822 and y>397 and y<510:
                         area7(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>829 and x<936 and y>397 and y<510:
                         area8(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>487 and x<594 and y>515 and y<628:
                         area9(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>601 and x<708 and y>515 and y<628:
                         area10(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>715 and x<822 and y>515 and y<628:
                         area11(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if x>829 and x<936 and y>515 and y<628:
                         area12(tela, matriz)
-                        verifica_vitoria(tela, matriz, nome1)
+                        verifica_vitoria(tela, matriz, nome1, gt="mp", nomes=jogadores, ult=jogada)
                     if area_sair_jogo.collidepoint(mouse_pos):
                         som_click()
                         guarda_matriz(matriz)
@@ -334,31 +372,9 @@ def multiplayer_jogo(tela, matriz, nome1, nome2, running=True):
                         som_click()
                         menu_regras_ingame_singleplayer(tela, matriz, nome1)
                         guarda_matriz(matriz)
-
-                if jogada == nome1:
-                    jogada = nome2
-                else: 
-                    jogada = nome1
-
+                    if x>487 and x<936 and y>279 and y<628:
+                        running = False
                 pygame.display.flip()
-
-def tela_jogador(tela, jogada, nome1, nome2):
-    fonte = pygame.font.SysFont("arlrdbd.ttf", 40, True, True)
-    if jogada == nome1:
-        mensagem = f'É a vez de' #isto vai ter que se alterar para a variavel do nome do men depois 
-        texto_formatado = fonte.render(mensagem, True, (255, 0, 0))
-        mensagem_nome = f'{nome1}'
-        texto_formatado1 = fonte.render(mensagem_nome, True, (255, 0, 0))
-        tela.blit(texto_formatado, (100, 372))
-        tela.blit(texto_formatado1, (150, 430))
-    elif jogada == nome2:
-        mensagem = f'É a vez de'
-        texto_formatado = fonte.render(mensagem, True, (0, 255, 0))
-        mensagem_nome = f'{nome2}'
-        texto_formatado1 = fonte.render(mensagem_nome, True, (0, 255, 0))
-        tela.blit(texto_formatado, (100, 372))
-        tela.blit(texto_formatado1, (150, 430))
-    pygame.display.update()
         
 def area1(tela, matriz):
     if matriz[0][0]==0:
@@ -1019,7 +1035,6 @@ def menu_regras(tela):
 def desenha_menu(tela):
     fundo = pygame.image.load("semaforo menu com peças.png")
     tela.blit(fundo, (0,0))
-    pygame.display.update()
 
 def som_click():
     click_sound= pygame.mixer.Sound("Mouse_Click_3-fesliyanstudios.com.mp3")
@@ -1074,16 +1089,14 @@ def main():
                     exit()
         if area_novo_jogo.collidepoint(pygame.mouse.get_pos()):
             tela.blit(botaonovojogo,(167,251))
-            pygame.display.update()
         elif area_continuar_jogo.collidepoint(pygame.mouse.get_pos()):
             tela.blit(botaocontinuarjogo,(162,361))
-            pygame.display.update()
         elif area_regras.collidepoint(pygame.mouse.get_pos()):
             tela.blit(botaoregras,(162,490))
-            pygame.display.update()
         elif area_sair.collidepoint(pygame.mouse.get_pos()):
             tela.blit(botaosair,(162,597))
-            pygame.display.update()      
+        
+        pygame.display.update()      
 
 pygame.display.set_caption("Semáforo!")
 pygame.mixer.init()

@@ -50,7 +50,7 @@ def verifica_vitoria(tela, matriz):
                     pygame.quit()
                     exit()
             
-def tela_jogador(tela, jogada):
+def tela_jogador(tela,jogada):
     fonte = pygame.font.SysFont("arlrdbd.ttf", 40, True, True)
     if jogada == "jogador":
         mensagem = f'É a vez de jogador' #isto vai ter que se alterar para a variavel do nome do men depois 
@@ -87,7 +87,7 @@ def jogo_singleplayer(tela, matriz):
                         posicoe_tabuleir(tela, matriz, x, y)          
                 vez_jogador = False
                 ai.update()
-                tela_jogador(jogada)  
+                tela_jogador(tela, jogada)  
             jogada = "bot"
         #se o sorteado for o bot faz isto 
         elif jogada=="bot":
@@ -101,7 +101,7 @@ def jogo_singleplayer(tela, matriz):
             jogada = "jogador"
             ai.update()
             verifica_vitoria(tela,matriz)
-            tela_jogador(jogada)  
+            tela_jogador(tela, jogada)  
         
 def posicoe_tabuleir(tela, matriz, x, y):
     if x>487 and x<594 and y>279 and y<391:

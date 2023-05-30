@@ -1,2 +1,6 @@
+<<<<<<< Updated upstream
 dfg
 dddd
+=======
+filipa 
+>>>>>>> Stashed changes

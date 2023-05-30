@@ -52,7 +52,7 @@ def verifica_vitoria(tela, matriz, nome):
                 elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                     mouse_pos=pygame.mouse.get_pos()
                     if area_sair.collidepoint(mouse_pos):
-                        som_click()()
+                        som_click()
                         guarda_nome(nome)
                         guarda_matriz(matriz)
                         main()
@@ -114,7 +114,7 @@ def desenha_tabuleiro_singleplayer(tela, matriz, nome):
                     guarda_matriz(matriz)
                     main(matriz, nome)
                 if area_regras_ingame.collidepoint(mouse_pos):
-                    som_click()()
+                    som_click()
                     menu_regras_ingame_singleplayer(tela, matriz, nome)
             else:
                 area1_carregar(tela,matriz)
@@ -860,21 +860,21 @@ def main():
             elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
                 mouse_pos=pygame.mouse.get_pos()
                 if area_novo_jogo.collidepoint(mouse_pos):
-                    som_click()()
+                    som_click()
                     matriz=[[0,0,0,0],[0,0,0,0],[0,0,0,0]]
                     escolhaNome(tela, matriz)
                 elif area_continuar_jogo.collidepoint(mouse_pos):
-                    som_click()()
+                    som_click()
                     nome=carrega_nome()
                     print(nome)
                     matriz=carrega_matriz()
                     print(matriz)
                     desenha_tabuleiro_singleplayer(tela, matriz, nome)
                 elif area_regras.collidepoint(mouse_pos):
-                    som_click()()
+                    som_click()
                     menu_regras(tela)
                 elif area_sair.collidepoint(mouse_pos):
-                    som_click()()
+                    som_click()
                     pygame.time.delay(500)
                     guarda_nome(nome)
                     guarda_matriz(matriz)

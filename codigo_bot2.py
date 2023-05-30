@@ -50,7 +50,7 @@ def verifica_vitoria(tela, matriz):
                     pygame.quit()
                     exit()
             
-def tela_jogador(tela,jogada):
+def tela_jogador(tela, jogada):
     fonte = pygame.font.SysFont("arlrdbd.ttf", 40, True, True)
     if jogada == "jogador":
         mensagem = f'É a vez de jogador' #isto vai ter que se alterar para a variavel do nome do men depois 

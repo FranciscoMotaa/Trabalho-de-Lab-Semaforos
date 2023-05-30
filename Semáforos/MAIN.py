@@ -1014,7 +1014,6 @@ def menu_regras_ingame_singleplayer(tela, matriz, nome):
                     desenha_tabuleiro_singleplayer(tela, matriz, nome)
                     som_click()
 
-
 def menu_regras(tela):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)

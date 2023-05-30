@@ -1107,6 +1107,7 @@ def main():
     botaosair = pygame.image.load("sair botao.png")
 
     while True:
+        jogada = None
         desenha_menu(tela)
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -1124,7 +1125,7 @@ def main():
                     print(nome)
                     matriz=carrega_matriz()
                     print(matriz)
-                    desenha_tabuleiro_singleplayer(tela, matriz, nome)
+                    desenha_tabuleiro_singleplayer(tela, matriz, nome, jogada)
                 elif area_regras.collidepoint(mouse_pos):
                     som_click()
                     menu_regras(tela)

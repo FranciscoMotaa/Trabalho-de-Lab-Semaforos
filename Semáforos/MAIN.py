@@ -47,7 +47,7 @@ def verifica_vitoria(tela, matriz, nome, gt="single", nomes=(None, None), ult=""
             pygame.time.delay(400)
             tela.blit(fundo, (0,0))
 
-            fonte = pygame.font.Font("arlrdbd.ttf", 50)
+            fonte = pygame.font.Font("arlrdbd.ttf", 55)
             mensagem = ""
             if gt=="single":
                 mensagem = nome
@@ -57,8 +57,8 @@ def verifica_vitoria(tela, matriz, nome, gt="single", nomes=(None, None), ult=""
                 for n in nomes:
                     if n == ult:
                         mensagem = n
-            texto_formatado = fonte.render(mensagem, True, (0,0,0))
-            tela.blit(texto_formatado, (100, 372))
+            texto_formatado = fonte.render(mensagem, True, (83, 71, 65))
+            tela.blit(texto_formatado, (494 , 427))
             pygame.display.update()
             for event in pygame.event.get():
                 if event.type == QUIT:
@@ -161,7 +161,7 @@ def escolhaNome(tela, matriz):
                     user_text = user_text[:-1]
                 else:
                     user_text += event.unicode     
-        text_surface = fonte.render(user_text, True, (0, 0, 0)) 
+        text_surface = fonte.render(user_text, True, (153,134, 117)) 
         tela.blit(text_surface, (input_rect.x + 134, input_rect.y + 30))
         input_rect.w = max(435, text_surface.get_width() + 10)
         pygame.display.update()
@@ -177,6 +177,10 @@ def escolhaTipoDeJogo(tela, matriz):
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
     multiplayer_botao = pygame.Rect(735, 450, 339, 86)
     fundo=pygame.image.load("escolher tipo de jogo.png")
+    
+    singlecarregado= pygame.image.load("singleplayer botao.png")
+    multicarregado= pygame.image.load("multiplayer botao.png")
+      
     tela.blit(fundo, (0,0))
     pygame.display.update()
     while True:
@@ -195,6 +199,12 @@ def escolhaTipoDeJogo(tela, matriz):
                 elif multiplayer_botao.collidepoint(mouse_pos):
                     som_click()
                     nome_multiplayer(tela,matriz)
+        if single_botao.collidepoint(pygame.mouse.get_pos()):
+            tela.blit(singlecarregado,(306.99, 426.3037))
+        elif multiplayer_botao.collidepoint(pygame.mouse.get_pos()):
+            tela.blit(multicarregado,(708.4869, 425.9923))
+        
+        pygame.display.update()  
 
 def nome_multiplayer(tela,matriz):
     fundo = pygame.image.load("nome jogador 1.png")
@@ -236,7 +246,7 @@ def nome1_multiplayer(tela, matriz):
                     user_text = user_text[:-1]
                 else:
                     user_text += event.unicode     
-        text_surface = fonte.render(user_text, True, (0, 0, 0)) 
+        text_surface = fonte.render(user_text, True, (153,134, 117)) 
         tela.blit(text_surface, (input_rect.x + 134, input_rect.y + 30))
         input_rect.w = max(435, text_surface.get_width() + 10)
         pygame.display.update()
@@ -271,7 +281,7 @@ def nome2_multiplayer(tela,matriz, nome1):
                     user_text = user_text[:-1]
                 else:
                     user_text += event.unicode     
-        text_surface = fonte.render(user_text, True, (0, 0, 0)) 
+        text_surface = fonte.render(user_text, True, (153,134, 117)) 
         tela.blit(text_surface, (input_rect.x + 134, input_rect.y + 30))
         input_rect.w = max(435, text_surface.get_width() + 10)
         pygame.display.update()
@@ -1087,13 +1097,13 @@ def main():
                     pygame.quit()
                     exit()
         if area_novo_jogo.collidepoint(pygame.mouse.get_pos()):
-            tela.blit(botaonovojogo,(167,251))
+            tela.blit(botaonovojogo,(167,252))
         elif area_continuar_jogo.collidepoint(pygame.mouse.get_pos()):
-            tela.blit(botaocontinuarjogo,(162,361))
+            tela.blit(botaocontinuarjogo,(163,361))
         elif area_regras.collidepoint(pygame.mouse.get_pos()):
-            tela.blit(botaoregras,(162,490))
+            tela.blit(botaoregras,(163,491))
         elif area_sair.collidepoint(pygame.mouse.get_pos()):
-            tela.blit(botaosair,(162,597))
+            tela.blit(botaosair,(163,598))
         
         pygame.display.update()      
 

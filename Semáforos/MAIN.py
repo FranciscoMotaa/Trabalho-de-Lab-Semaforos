@@ -97,6 +97,12 @@ def carrega_nome():
             vez = None
     return nome, vez
 
+def carrega_matriz():
+    with open("matriz.txt", "r") as ficheiro_matriz:
+        conteudo = ficheiro_matriz.read()
+        matriz = eval(conteudo)
+    return matriz
+
 def guarda_nome(nome, jogada=None):
     ws = str(nome)
     if jogada:
@@ -104,12 +110,6 @@ def guarda_nome(nome, jogada=None):
     ficheiro_nome = open("nome.txt", "w")
     ficheiro_nome.write(ws)
     ficheiro_nome.close()
-
-def carrega_matriz():
-    with open("matriz.txt", "r") as ficheiro_matriz:
-        conteudo = ficheiro_matriz.read()
-        matriz = eval(conteudo)
-    return matriz
 
 def guarda_matriz(matriz):
     ficheiro_matriz = open("matriz.txt", "w")
@@ -190,10 +190,7 @@ def desenha_tabuleiro_multiplayer(tela, matriz, nome, nome2, jogada):
                     main(matriz, nome)
                 if area_regras_ingame.collidepoint(mouse_pos):
                     som_click()
-                    print("uysdfsdgd")
                     menu_regras_ingame_mp(tela, matriz)
-                    print("uyguy")
-                    # multiplayer_jogo(tela, matriz, nome, nome2, jogada)
                     continue
 
             else:

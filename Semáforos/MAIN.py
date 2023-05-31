@@ -383,8 +383,9 @@ def multiplayer_jogo(tela, matriz, nome1, nome2, jogada, running=True):
                         main()
                     if area_regras_ingame.collidepoint(mouse_pos):
                         som_click()
-                        menu_regras_ingame_singleplayer(tela, matriz, nome1)
+                        menu_regras_ingame_multiplayer(tela, matriz, nome1, nome2, jogada)
                         guarda_matriz(matriz)
+
                     if x>487 and x<936 and y>279 and y<628:
                         running = False
                 pygame.display.flip()
@@ -1045,7 +1046,7 @@ def realizar_acao_interface(matriz, i, j, tela):
        pygame.display.update() 
         
 
-def menu_regras_ingame_singleplayer(tela, matriz, nome):
+def menu_regras_ingame_singleplayer(tela, matriz, nome, jogada):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
         fundo = pygame.image.load("REGRAS.png")
@@ -1060,8 +1061,24 @@ def menu_regras_ingame_singleplayer(tela, matriz, nome):
                 if area_sair_regras.collidepoint(mouse_pos):
                     som_click()
                     carrega_matriz()
-                    desenha_tabuleiro_singleplayer(tela, matriz, nome)
+                    desenha_tabuleiro_singleplayer(tela, matriz, nome, jogada)
+def menu_regras_ingame_multiplayer(tela, matriz, nome1, nome2, jogada):
+    while True:
+        area_sair_regras = pygame.Rect(13, 665, 100, 100)
+        fundo = pygame.image.load("REGRAS.png")
+        tela.blit(fundo, (0,0))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                exit()
+            elif event.type==pygame.MOUSEBUTTONDOWN and event.button==1:
+                mouse_pos=pygame.mouse.get_pos()
+                if area_sair_regras.collidepoint(mouse_pos):
                     som_click()
+                    carrega_matriz()
+                    multiplayer_jogo(tela, matriz, nome1, nome2, jogada, running = True)
+                    
 
 def menu_regras(tela):
     while True:
@@ -1077,7 +1094,6 @@ def menu_regras(tela):
                 mouse_pos=pygame.mouse.get_pos()
                 if area_sair_regras.collidepoint(mouse_pos):
                     som_click()
-
                     main()
 
 def desenha_menu(tela):

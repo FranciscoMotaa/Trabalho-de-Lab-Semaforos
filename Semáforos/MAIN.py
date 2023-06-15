@@ -240,7 +240,6 @@ def escolhaNome(tela, matriz):
         pygame.display.update()
 
 def escolhaTipoDeJogo(tela, matriz):
-    fonte = pygame.font.Font("arlrdbd.ttf", 50)
     single_botao = pygame.Rect(334, 449, 339, 86)
     area_sair_escolhaNomes = pygame.Rect(13, 665, 100, 100)
     multiplayer_botao = pygame.Rect(735, 450, 339, 86)
@@ -271,10 +270,7 @@ def escolhaTipoDeJogo(tela, matriz):
             tela.blit(singlecarregado,(306.99, 426.3037))
         elif multiplayer_botao.collidepoint(pygame.mouse.get_pos()):
             tela.blit(multicarregado,(708.4869, 425.9923))
-        else:
-            tela.blit(fundo, (0,0))
-            
-        pygame.display.update()  
+        pygame.display.update()
 
 def nome_multiplayer(tela,matriz):
     fundo = pygame.image.load("nome jogador 1.png")
@@ -1069,17 +1065,58 @@ def jogo_singleplayer(tela, matriz, nome):
 
                         menu_regras_ingame_singleplayer(tela, matriz, nome)
                         guarda_matriz(matriz) 
+                turno_ia(matriz, tela, nome)
+                verifica_vitoria
+                jogada = nome
+                pygame.display.update()
+def turno_ia(matriz, tela, nome):
+    #ve quais são as casas disponiveis 
+    casas_disponiveis = []
+    #percorre a matriz do jogo e se aquela posição tiver a zeros adiciona á lista de casas_disponiveis 
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            if matriz[i][j] == 0:
+                casas_disponiveis.append((i,j)) 
+    #condição para ler o tabuleiro e colocar lá as peças na matriz                         
+    if casas_disponiveis:
+        i, j = random.choice(casas_disponiveis)
+        if matriz[i][j] == 0:
+            matriz[i][j] = 1
+            realizar_acao_interface(matriz, i, j, tela)
+        elif matriz[i][j] == 1:
+            matriz[i][j] = 2
+            realizar_acao_interface(matriz, i, j, tela)
+        elif matriz[i][j] == 2:
+            matriz[i][j] = 3
+            realizar_acao_interface(matriz, i, j, tela, nome) 
+        posicoe_tabuleir(matriz, casas_disponiveis, i, j, nome)
+        #realizar_acao_interface(matriz, i, j, tela) 
+        print(matriz)
+    pygame.display.update()
+def realizar_acao_interface(matriz, i, j, tela):
+    valor = matriz[i][j]
+    #fazer load das imagens 
+    bola = pygame.image.load("bola.png")
+    triangulo = pygame.image.load("triangulo.png")
+    quadrado = pygame.image.load("quadrado.png")
 
-                """ posicoes_disponiveis = posicoes_disponiveis(matriz)
-                if posicoes_disponiveis:
-                    posicao = random.choice(posicoes_disponiveis)
-                    i, j = posicao
-                    # Realize a jogada do bot na posição (i, j) desejada
-                    matriz[i][j] = 0  # Substitua "amarelo" pela cor desejada
-                else:
-                    return False
-                    # Tratamento quando não há posições disponíveis
- """
+    coordenadas = [
+        (490, 282), (603, 282), (718, 282), (831, 282),
+        (490, 400), (603, 400), (718, 400), (831, 400),
+        (490, 518), (603, 518), (718, 518), (831, 518)
+    ]
+    x, y = coordenadas[i + j]
+
+    if valor == 1:
+        tela.blit(bola,(x,y))
+        pygame.display.update()
+    elif valor == 2:
+        tela.blit(triangulo,(x,y))
+        pygame.display.update()
+    elif valor == 3:
+       tela.blit(quadrado, (x,y))
+       pygame.display.update() 
+        
 def menu_regras_ingame_singleplayer(tela, matriz, nome):
     while True:
         area_sair_regras = pygame.Rect(13, 665, 100, 100)
@@ -1203,7 +1240,6 @@ def main():
             tela.blit(botaoregras,(163,491))
         elif area_sair.collidepoint(pygame.mouse.get_pos()):
             tela.blit(botaosair,(163,598))
-        
         pygame.display.update()      
 
 pygame.display.set_caption("Semáforo!")
